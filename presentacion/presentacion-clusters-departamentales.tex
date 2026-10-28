@@ -1,0 +1,55 @@
+\documentclass[aspectratio=169,11pt,table]{beamer}
+\usepackage{../assets/ccde-beamer}
+
+%% ---------- Metadatos (plantilla canónica CCDE: \date{} siempre vacío) ----------
+\renewcommand{\ccdefootlabel}{CCDE -- Estructura Productiva Regional y Cicatriz COVID-19}
+\title{Estructura Productiva Departamental y Vulnerabilidad Macroeconómica en el Perú}
+\subtitle{Análisis Composicional (CoDa), Clustering Jerárquico y Efecto Cicatriz Post-COVID-19}
+\author{Círculo de Ciencia de Datos y Econometría}
+\date{}
+
+\begin{document}
+
+% ================================================================
+% PORTADA OFICIAL CCDE (SIN FECHA POR NORMA CANÓNICA)
+% ================================================================
+\ccdeportada{Estructura Productiva y Cicatriz COVID-19}{Tipología Composicional (CLR/ILR) y Econometría de Panel en los 24 Departamentos del Perú}{CCDE}
+
+% ================================================================
+% MAPA DE LA INVESTIGACIÓN Y TESIS CENTRAL (PIRÁMIDE DE MINTO)
+% ================================================================
+\begin{frame}{Mapa de la Investigación y Tesis Central}
+\vspace{-0.08cm}
+\begin{columns}[T,onlytextwidth]
+\begin{column}{0.53\textwidth}
+{\footnotesize\tableofcontents}
+\end{column}
+\hfill
+\begin{column}{0.43\textwidth}
+\begin{keybox}[left=2mm,right=2mm,top=1.2mm,bottom=1.2mm,fontupper=\scriptsize\RaggedRight]
+\textbf{Tesis Central (Top-Down Takeaway)}\\[0.08cm]
+El choque de 2020 paralizó transversalmente todas las regiones ($\approx -14.4\%$), pero la \textbf{hiper-especialización en enclaves mineros} multiplicó por $4.4\times$ la volatilidad histórica y generó una \textbf{cicatriz pospandemia de $-10.92$ puntos} ($p = 0.0029$) entre 2021 y 2023.
+\end{keybox}
+\vspace{0.10cm}
+\begin{ccdebox}[left=2mm,right=2mm,top=1.2mm,bottom=1.2mm]
+\scriptsize\RaggedRight
+\textbf{Cobertura Empírica}\\
+INEI: 24 departamentos, periodo 2008--2025 ($N=428$ obs.\ de panel; 12 sectores productivos).\\[0.06cm]
+\textbf{Arsenal Metodológico}\\
+CoDa (Aitchison CLR/ILR) + PCA + Ward/K-Means/PAM/GMM + Panel FE con errores clusterizados.
+\end{ccdebox}
+\end{column}
+\end{columns}
+\end{frame}
+
+% ================================================================
+% SECCIONES MODULARES EMPÍRICAS
+% ================================================================
+\input{sections/01-motivacion-datos.tex}
+\input{sections/02-clustering-composicional.tex}
+\input{sections/03-volatilidad-puzzle-tasas.tex}
+\input{sections/04-cicatriz-niveles-indexados.tex}
+\input{sections/05-conclusiones-reproducibilidad.tex}
+
+\end{document}
+
