@@ -1,145 +1,35 @@
-% ================================================================
-% CCDE Beamer — Plantilla canónica
-% Basada en la versión más pulida (KNN, sep-2026): sin fecha,
-% identidad visual unificada, portada parametrizada.
-% Uso: \usepackage{ccde-beamer}  (compilar desde Plantilla-CCDE/)
-% ================================================================
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{ccde-beamer}[2026/09/23 CCDE plantilla canonica sin fecha]
-
-% ---------- Paquetes ----------
+\ProvidesPackage{ccde-beamer}[2026/10/28 Presentacion CCDE]
 \RequirePackage[spanish]{babel}
 \RequirePackage[utf8]{inputenc}
 \RequirePackage[T1]{fontenc}
-\RequirePackage{lmodern}
-\RequirePackage{microtype}
-\RequirePackage{graphicx}
-\RequirePackage[table]{xcolor}
-\RequirePackage{booktabs}
-\RequirePackage{array}
-\RequirePackage{ragged2e}
-\RequirePackage{amsmath,amssymb}
-\RequirePackage{tikz}
-\usetikzlibrary{arrows.meta,positioning,calc,babel,shapes.geometric,shadows,decorations.pathreplacing}
+\RequirePackage{lmodern,microtype,graphicx,booktabs,amsmath,amssymb,ragged2e}
 \RequirePackage[most]{tcolorbox}
-\RequirePackage{listings}
-
-% ---------- Identidad visual CCDE ----------
-\definecolor{ccdenavy}{RGB}{10,30,64}
-\definecolor{ccdeblue}{RGB}{34,53,94}
-\definecolor{ccdemid}{RGB}{43,91,155}
-\definecolor{ccdeaccent}{RGB}{0,119,182}
-\definecolor{ccdesky}{RGB}{61,150,210}
-\definecolor{ccdelight}{RGB}{115,196,223}
-\definecolor{ccdeice}{RGB}{235,247,252}
-\definecolor{codebg}{RGB}{245,247,250}
-\definecolor{warn}{RGB}{202,93,54}
-\definecolor{okgreen}{RGB}{22,128,95}
-\definecolor{purplex}{RGB}{120,78,160}
-
-\usetheme{default}
-\usefonttheme{professionalfonts}
+\definecolor{ccdenavy}{HTML}{0A1E40}
+\definecolor{ccdeaccent}{HTML}{0077B6}
+\definecolor{ccdeice}{HTML}{EBF7FC}
+\definecolor{warn}{HTML}{CA5D36}
+\definecolor{okgreen}{HTML}{16805F}
+\definecolor{purplex}{HTML}{784EA0}
 \setbeamertemplate{navigation symbols}{}
-\setbeamertemplate{section in toc}[sections numbered]
-\setbeamertemplate{itemize item}{\color{ccdeaccent}\small$\blacktriangleright$}
-\setbeamertemplate{itemize subitem}{\color{ccdesky}\scriptsize$\bullet$}
-\setbeamertemplate{enumerate item}{\color{ccdeaccent}\insertenumlabel.}
-
-\setbeamercolor{normal text}{fg=ccdenavy,bg=ccdeice!18}
-\setbeamercolor{frametitle}{fg=white,bg=ccdenavy}
-\setbeamercolor{title}{fg=white,bg=ccdenavy}
-\setbeamercolor{subtitle}{fg=ccdeice}
+\setbeamercolor{normal text}{fg=ccdenavy,bg=white}
+\setbeamercolor{frametitle}{fg=ccdenavy,bg=white}
 \setbeamercolor{structure}{fg=ccdeaccent}
-\setbeamercolor{block title}{fg=white,bg=ccdeblue}
-\setbeamercolor{block body}{fg=ccdenavy,bg=white}
+\setbeamerfont{frametitle}{size=\large,series=\bfseries}
+\setbeamersize{text margin left=.65cm,text margin right=.65cm}
+\setbeamertemplate{frametitle}{\vspace{.20cm}\insertframetitle\par\vspace{.12cm}}
+\newcommand{\ccdefootlabel}{CCDE | Estructura productiva y recuperación regional}
+\setbeamertemplate{footline}{\hspace{.65cm}\raisebox{.18cm}{\scriptsize\color{ccdeaccent}\ccdefootlabel}\hfill\raisebox{.18cm}{\scriptsize\color{ccdenavy}\insertframenumber\hspace{.65cm}}}
+\newcommand{\source}[1]{\vfill{\fontsize{6.5}{8}\selectfont\color{ccdeaccent}Fuente: #1\par}\vspace{.08cm}}
+\newtcolorbox{keybox}[1][]{colback=ccdeice,colframe=ccdeice,boxrule=0pt,arc=1mm,fontupper=\RaggedRight,left=3mm,right=3mm,top=2mm,bottom=2mm,#1}
+\newcommand{\chartframe}[4]{\begin{frame}[t]{#1}\centering\includegraphics[width=\textwidth,height=5.45cm,keepaspectratio]{#2}\par\vspace{.10cm}\begin{minipage}{\textwidth}\small\RaggedRight #3\end{minipage}\source{#4}\end{frame}}
+\newcommand{\metric}[3]{\begin{keybox}\textcolor{#3}{\fontsize{29}{32}\selectfont\bfseries #1}\par\vspace{.12cm}\normalsize #2\end{keybox}}
 
-\setbeamertemplate{frametitle}{%
-  \nointerlineskip
-  \begin{beamercolorbox}[wd=\paperwidth,ht=0.72cm,dp=0.24cm,leftskip=0.38cm,rightskip=0.38cm]{frametitle}
-    \usebeamerfont{frametitle}\insertframetitle
-  \end{beamercolorbox}
-}
-
-% ---------- Logo y pie (sin fecha por diseño) ----------
-% Logos canónicos centralizados en assets/ (positivo y negativo):
-% \renewcommand{\ccdelogofile}{...}
-% y \renewcommand{\ccdefootlabel}{CCDE -- Mi Tema}
-\newcommand{\ccdelogopositivo}{../assets/ccde-logo-positivo.png}
-\newcommand{\ccdelogonegativo}{../assets/ccde-logo-negativo.png}
-\newcommand{\ccdelogofile}{\ccdelogopositivo}
-\newcommand{\ccdefootlabel}{CCDE}
-\date{} % canónico: nunca mostrar fecha
-
-\setbeamertemplate{footline}{%
-  \leavevmode%
-  \hbox{%
-    \begin{beamercolorbox}[wd=.70\paperwidth,ht=0.38cm,dp=0.12cm,leftskip=0.35cm]{author in head/foot}%
-      \scriptsize\textcolor{ccdemid}{\ccdefootlabel}%
-    \end{beamercolorbox}%
-    \begin{beamercolorbox}[wd=.20\paperwidth,ht=0.38cm,dp=0.12cm,center]{date in head/foot}%
-      \IfFileExists{\ccdelogofile}{\includegraphics[height=0.25cm]{\ccdelogofile}}{%
-        \scriptsize\textcolor{ccdemid}{CCDE}%
-      }%
-    \end{beamercolorbox}%
-    \begin{beamercolorbox}[wd=.10\paperwidth,ht=0.38cm,dp=0.12cm,rightskip=0.35cm]{page number in head/foot}%
-      \hfill\scriptsize\textcolor{ccdeblue}{\insertframenumber/\inserttotalframenumber}%
-    \end{beamercolorbox}%
-  }%
-}
-
-% ---------- Componentes ----------
-\newcommand{\source}[1]{%
-  \begin{tikzpicture}[remember picture,overlay]
-    \node[anchor=south west,text=ccdemid,font=\tiny,align=left,text width=15.2cm]
-      at ([xshift=0.35cm,yshift=0.56cm]current page.south west) {Fuente: #1};
-  \end{tikzpicture}%
-}
-
-\newcommand{\sourceright}[1]{%
-  \begin{tikzpicture}[remember picture,overlay]
-    \node[anchor=south west,text=ccdemid,font=\tiny,align=left,text width=6.7cm]
-      at ([xshift=8.25cm,yshift=0.56cm]current page.south west) {Fuente: #1};
-  \end{tikzpicture}%
-}
-
-\newcommand{\tagpill}[1]{%
-  \tikz[baseline=(x.base)]\node[fill=ccdeice,draw=ccdelight,rounded corners=2pt,
-    inner xsep=4pt,inner ysep=2pt] (x) {\scriptsize\bfseries\textcolor{ccdeblue}{#1}};%
-}
-
-% Entrada bibliográfica compacta (#1 autor, #2 año, #3 resto)
-\newcommand{\refentry}[3]{%
-  \par\noindent\textbf{#1} \textcolor{ccdemid}{(#2)}. #3\par
-  \vspace{0.5em}
-}
-
-\newtcolorbox{ccdebox}[1][]{
-  enhanced,colback=white,colframe=ccdeblue,arc=1.5mm,boxrule=0.7pt,
-  left=2.2mm,right=2.2mm,top=1.5mm,bottom=1.5mm,#1
-}
-
-\newtcolorbox{keybox}[1][]{
-  enhanced,colback=ccdelight!13,colframe=ccdeaccent,arc=1.5mm,boxrule=0.8pt,
-  left=2.4mm,right=2.4mm,top=1.6mm,bottom=1.6mm,fontupper=\small,#1
-}
-
-\newtcolorbox{contrastbox}[2]{
-  enhanced,colback=#1!8,colframe=#1!80!ccdenavy,title=#2,fonttitle=\bfseries,
-  coltitle=white,boxed title style={colback=#1!80!ccdenavy,arc=1mm,boxrule=0pt},
-  attach boxed title to top left={yshift=-2mm,xshift=2mm},
-  arc=1.5mm,boxrule=0.7pt,left=2.2mm,right=2.2mm,top=2.8mm,bottom=1.6mm
-}
-
-\lstdefinestyle{ccdepython}{
-  language=Python,basicstyle=\ttfamily\scriptsize,
-  keywordstyle=\bfseries\color{ccdeaccent},commentstyle=\itshape\color{okgreen},
-  stringstyle=\color{warn},backgroundcolor=\color{codebg},frame=single,
-  rulecolor=\color{ccdelight},frameround=tttt,showstringspaces=false,
-  breaklines=true,columns=fullflexible,keepspaces=true,aboveskip=0cm,belowskip=0cm
-}
-
-% ---------- Portada canónica SIN fecha ----------
-% #1 = título grande, #2 = subtítulo, #3 = sigla para el círculo fallback (ej. KNN)
+% Portada institucional original conservada por solicitud del usuario.
+\definecolor{ccdeblue}{RGB}{34,53,94}
+\definecolor{ccdelight}{RGB}{115,196,223}
+\usetikzlibrary{calc,shadows}
+\newcommand{\ccdelogofile}{../assets/ccde-logo-positivo.png}
 \newcommand{\ccdeportada}[3]{%
 \begin{frame}[plain]
 \begin{tikzpicture}[remember picture,overlay]

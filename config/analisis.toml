@@ -1,0 +1,37 @@
+# Supuestos de diseño; los resultados nunca se escriben manualmente.
+[datos]
+entrada = "data/processed/pbi_departamental_consolidado.xlsx"
+salida = "data/processed"
+figuras = "figures"
+
+[muestra]
+pre_inicio = 2015
+pre_fin = 2019
+tasas_inicio = 2008
+tasas_fin = 2023
+niveles_inicio = 2017
+niveles_fin = 2023
+base = 2019
+choque = 2020
+post_inicio = 2021
+post_fin = 2023
+
+[clustering]
+semilla = 0
+delta_ceros = 0.05 # puntos de participación en una composición que suma 100
+componentes = 2
+k_tipologia = 4
+k_macro = 2
+k_evaluados = [2, 3, 4, 5]
+gap_replicas = 30
+estabilidad_replicas = 100
+fraccion_submuestra = 0.8 # sin reemplazo: submuestreo, no bootstrap
+sensibilidad_delta = [0.01, 0.05, 0.1]
+
+[econometria]
+confianza = 0.95
+exclusion_departamento = "Apurímac"
+exclusion_anio = 2016
+
+[visual]
+dpi = 240

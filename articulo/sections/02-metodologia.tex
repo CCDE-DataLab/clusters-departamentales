@@ -1,0 +1,56 @@
+\section{Metodología}
+\subsection{Participaciones y geometría composicional}
+Sea $x_i=(x_{i1},\ldots,x_{iD})$ la composición media del departamento $i$, con $D=\Sectors$, $x_{ij}\geq0$ y $\sum_jx_{ij}=100$. El cierre implica dependencia entre las partes: aumentar una participación requiere que otra disminuya. Trabajamos con logaritmos de cocientes, siguiendo el enfoque composicional de Aitchison \cite{aitchison}.
+
+El algoritmo admite reemplazo multiplicativo de ceros \cite{martin}. Si $z_i$ es el número de partes nulas y $\delta=\DeltaZero$ puntos de participación, la transformación es
+\begin{equation}
+x^*_{ij}=\begin{cases}\delta,&x_{ij}=0,\\x_{ij}(100-z_i\delta)/100,&x_{ij}>0.\end{cases}
+\end{equation}
+Se aplica después de normalizar la composición a 100. En los promedios efectivamente utilizados se observan \textbf{\Zeros\ ceros}; por tanto, el reemplazo no modifica los datos. Valores pequeños de extracción en Lambayeque y San Martín no son ceros y no se sustituyen. La sensibilidad a $\delta$ es aquí una comprobación sin perturbación efectiva, no evidencia de robustez ante ceros estructurales.
+
+Las coordenadas CLR son
+\begin{equation}
+\operatorname{clr}(x^*_{ij})=\log x^*_{ij}-\frac{1}{D}\sum_{h=1}^{D}\log x^*_{ih}.
+\end{equation}
+Sus filas suman cero y viven en un subespacio de dimensión $D-1$. Calculamos también coordenadas ILR con una base ortonormal de Helmert \cite{egozcue}. La distancia euclidiana entre vectores ILR coincide con la distancia de Aitchison entre composiciones.
+
+Aplicamos PCA a CLR centrado, sin estandarizar columnas. Los primeros dos componentes explican \PcaCumulative\% de la varianza (\PcaOne\% y \PcaTwo\%); tres conservan \PcaThree\%. El primer eje se relaciona con extracción y el segundo contrasta manufactura con agropecuario, según sus cargas. El signo de cada componente es convencional. El mapa no superpone flechas de cargas en una escala arbitraria: las cargas se reportan por separado en el apéndice.
+
+\subsection{Agrupamiento y validación}
+Comparamos Ward, K-Means, PAM y mezclas gaussianas para K=2,3,4,5 sobre CLR+PCA2, CLR+PCA3 e ILR completo: \SpecCount\ configuraciones. K-Means utiliza 20 inicializaciones; PAM busca intercambios desde medoides iniciales; GMM utiliza cinco inicializaciones y se evalúa además mediante BIC. PAM es una búsqueda local, sin garantía de óptimo global. La semilla fija facilita reproducir los ejercicios.
+
+Evaluamos silueta, Calinski--Harabasz y Davies--Bouldin. La silueta depende de la representación: un valor mayor tras reducir dimensión no demuestra que los componentes descartados sean ruido económico irrelevante. La partición principal de cuatro perfiles se utiliza por interpretabilidad y estabilidad relativa, manteniendo alternativas como sensibilidad.
+
+Calculamos Gap con \GapReplicas\ referencias uniformes en la caja de las coordenadas PCA observadas \cite{gap}. Aplicamos la regla del primer K que cumple $\operatorname{Gap}(K)\geq\operatorname{Gap}(K+1)-s_{K+1}$. La estabilidad se aproxima con \StabilityReplicas\ submuestras del \SubsamplePct\% \textbf{sin reemplazo}: cada grupo original, restringido a las unidades seleccionadas, se compara con el grupo remuestreado de mayor Jaccard. Promediamos por grupo y luego por réplica. Este procedimiento es submuestreo, una alternativa discutida por Hennig \cite{hennig}; no es bootstrap ni un intervalo de confianza.
+
+Los nombres K=4 se asignan por participación extractiva media ordenada. Son etiquetas descriptivas. En particular, \textit{diversificado/agro} incluye Lima, Lambayeque y San Martín; comparten baja extracción, sin que los tres sean economías predominantemente agrarias. Tampoco se deduce diversificación de una sola proporción minera; el HHI sectorial se exporta como descriptor complementario.
+
+Distinguimos el corte Ward K=2 de una agregación económica de K=4. El primero separa \WardSmallCount\ y \WardLargeCount\ departamentos. La segunda agrupa los dos perfiles de mayor extracción en un bloque minero de \MacroMiningCount\ unidades y reúne los demás en otro de \MacroOtherCount. Se utiliza en M2 y no equivale al corte Ward de mayor silueta.
+
+\subsection{Volatilidad, crecimiento e índice de nivel}
+El crecimiento anual y el índice respecto a 2019 son
+\begin{equation}
+g_{it}=100\left(\frac{VAB_{it}}{VAB_{i,t-1}}-1\right),\qquad I_{it}=100\frac{VAB_{it}}{VAB_{i,2019}}.
+\end{equation}
+Una caída de 12\% seguida de un rebote de 9\% produce $100(0.88)(1.09)=95.92$. Es un ejemplo aritmético, no una trayectoria estimada. Las métricas informan dimensiones distintas.
+
+La desviación estándar por perfil utiliza las observaciones departamento-año de $g_{it}$. Incluye heterogeneidad entre unidades, variación temporal, pandemia y rebote; no equivale a volatilidad idiosincrática tras controlar choques comunes. Reportamos Levene centrado en la mediana y Fligner--Killeen como diagnósticos descriptivos. Sus valores $p$ convencionales no ajustan la dependencia serial o transversal del panel.
+
+\subsection{Modelos de efectos fijos}
+Para los modelos categóricos estimamos
+\begin{equation}\begin{split}
+y_{it}={}&\alpha_i+\beta_C C_t+\beta_P P_t\\
+&+\sum_{k\ne r}\gamma_k C_tG_{ik}+\sum_{k\ne r}\theta_k P_tG_{ik}+u_{it},
+\end{split}\end{equation}
+donde $C_t=1[t=2020]$, $P_t=1[2021\leq t\leq2023]$ y $r$ es diversificado/agro. La dependiente es $g_{it}$ en M1 y M4 e $I_{it}$ en M5. Los efectos fijos absorben los niveles constantes departamentales y los indicadores de grupo, que no varían en el tiempo.
+
+M2 sustituye los cuatro perfiles por la agregación económica de dos grupos. M3 y M6 sustituyen las categorías por $z_i$, participación extractiva previa estandarizada con la media y desviación estándar muestral de los 24 departamentos. M3 usa crecimiento y M6 índice. M4 replica M1 excluyendo Apurímac 2016. La tabla \ref{tab:modelos} resume las especificaciones.
+
+\begin{table}[htbp]\centering\small\input{../resultados/modelos.tex}
+\caption{Especificaciones y muestras}\label{tab:modelos}
+\nota{Todas incluyen efectos fijos departamentales. M4 retira una observación. El $R^2$ within no permite ordenar modelos con diferente dependiente y muestra.}\end{table}
+
+Los coeficientes $\theta_k$ comparan el cambio entre \PostStart--\PostEnd\ y el periodo omitido con el cambio del grupo de referencia. En M5, el periodo omitido es \LevelStart--\PreEnd; en M1 comprende los años previos a 2020 de su ventana más larga. No es una brecha de nivel de un solo año ni la distancia frente a una trayectoria contrafactual sin pandemia. La base 2019 iguala el índice de todos los departamentos en ese año, pero no iguala sus trayectorias previas.
+
+Los errores estándar se agrupan por departamento mediante \texttt{PanelOLS}; los intervalos se obtienen con \texttt{conf\_int} y la distribución t de la versión registrada del estimador \cite{linearmodels}. Se conserva el ajuste por regresores (\texttt{debiased=True}) y la configuración predeterminada sin ajuste adicional por número de grupos. Hay \Departments\ grupos de inferencia y solo \EnclaveCount\ departamentos enclave. No se incluyen efectos fijos anuales completos: los indicadores comunes recogen solo los regímenes definidos. El diseño no garantiza tendencias paralelas, ausencia de confusión temporal o asignación exógena a una estructura productiva.
+\FloatBarrier

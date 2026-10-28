@@ -1,0 +1,51 @@
+\section{Resultados}
+\subsection{Tipología interpretable y criterios en tensión}
+El mapa CLR+PCA2 distingue perfiles principalmente a lo largo del gradiente extractivo (figura \ref{fig:pca}). Las composiciones medias muestran diferencias entre los dos perfiles mineros en manufactura y otras actividades (figura \ref{fig:perfiles} y tabla \ref{tab:perfiles}). El grupo enclave incluye Apurímac, Huancavelica y Pasco; los demás miembros se enumeran en el apéndice.
+
+\figura{fig1_pca_clusters.pdf}{Posiciones departamentales en CLR+PCA2}{fig:pca}{Ward K=4. Puntos y etiquetas usan colores por perfil; los ejes reportan varianza CLR explicada. Las cargas sectoriales se muestran en el apéndice. Elaboración CCDE con datos INEI.}
+\figura{fig3_perfiles_sectoriales.pdf}{Composición sectorial media por perfil}{fig:perfiles}{Promedios simples entre departamentos de \PreStart--\PreEnd; cada barra suma 100\%. Otras actividades reúne las ramas no representadas individualmente e incluye pesca contenida en la categoría residual de origen.}
+\begin{table}[htbp]\centering\small\input{../resultados/perfiles.tex}
+\caption{Participaciones seleccionadas por perfil, en porcentaje}\label{tab:perfiles}
+\nota{Las columnas seleccionadas no agotan la composición. Los nombres son etiquetas relativas derivadas de la participación extractiva.}\end{table}
+
+Ward K=2 alcanza silueta \SilMacro, frente a \SilTypology\ en K=4. Ward y K-Means coinciden en K=4 sobre PCA2; su Jaccard medio es \JaccardWard\% y \JaccardKmeans\%, respectivamente. Sin embargo, el máximo local de Gap en K=4 (\GapTypology) no determina la selección formal: la regla de un error estándar elige K=\GapChoice. No corresponde describir K=4 como óptimo único o clasificación inequívoca (figura \ref{fig:validacion}).
+
+PCA3 y la geometría ILR completa modifican la partición, con los ARI reportados en el apéndice. La sensibilidad limita las inferencias que toman el grupo estimado como una característica observada sin error. PCA2 conserva aproximadamente siete décimos de la variación CLR; el resto puede contener información económicamente relevante.
+
+\figura{fig2_validacion_clustering.pdf}{Separación, Gap y estabilidad}{fig:validacion}{Paneles independientes para evitar doble eje. Silueta con origen cero, Jaccard en escala 0--1 y Gap con incertidumbre de Monte Carlo. La franja señala K=4; no es un intervalo de confianza.}
+\FloatBarrier
+
+\subsection{Dispersión y un episodio extremo}
+La desviación estándar del crecimiento agrupado es \SdEnclave\ puntos porcentuales en enclave y \SdAgro\ en diversificado/agro: una razón de \SdRatio\ entre \textbf{desviaciones estándar}. No es una razón de varianzas, la cual sería el cuadrado de esa cifra. Levene arroja $p=\LeveneP$ y Fligner--Killeen $p=\FlignerP$. La dependencia del panel impide tratar esos valores como prueba definitiva de un régimen estructural de volatilidad.
+
+Apurímac registra un aumento de \ExtremeGrowth\% en 2016. Es compatible con un gran cambio de capacidad extractiva y se conserva como observación económica real. Sin información adicional de proyectos no se atribuye exclusivamente a una operación concreta. La figura \ref{fig:volatilidad} muestra todas las observaciones en un eje lineal continuo y compara la dispersión antes y después de excluir ese punto como sensibilidad.
+
+El $R^2$ within de M1 pasa de \ROne\ a \RFour\ en M4. Esto muestra la influencia de la observación en un modelo con pocos regresores de tiempo; no demuestra que retirarla mejore la especificación económica. M4 usa otra muestra y se interpreta como sensibilidad, manteniendo M1 como referencia del panel completo.
+
+\figura{fig4_volatilidad_estructural.pdf}{Crecimiento y sensibilidad de la dispersión}{fig:volatilidad}{Panel \RateStart--\RateEnd. Puntos departamento-año; cajas con mediana y rango intercuartílico. Las barras parten de cero. La exclusión de M4 afecta una sola celda y no modifica la fuente.}
+\FloatBarrier
+
+\subsection{Contrastes en tasas de crecimiento}
+M1--M4 se presentan en la tabla \ref{tab:tasas}. Los indicadores de choque recogen cambios del crecimiento respecto al periodo previo; no son directamente la tasa de 2020 de todos los departamentos. Los efectos principales dependen de la categoría de referencia o de la media del predictor estandarizado.
+
+Los contrastes COVID por perfil de M1 son imprecisos, especialmente en los grupos extractivos. Un intervalo que contiene cero indica que la muestra no distingue con precisión algunos cambios relativos; no establece igualdad de impactos ni demuestra un error de tipo II. Tampoco identifica como causa de la imprecisión la simultaneidad del confinamiento. Dispersión, tamaños de grupo y especificación son explicaciones posibles que requieren nuevos contrastes.
+
+\begin{table}[htbp]\centering\footnotesize\setlength{\tabcolsep}{4pt}
+\input{../resultados/tasas.tex}
+\caption{Crecimiento anual del VAB real, M1--M4}\label{tab:tasas}
+\nota{Coeficientes en puntos porcentuales; errores estándar agrupados por departamento entre paréntesis. M1 y M4: referencia diversificado/agro; M2: macrogrupo diversificado; M3: minería estandarizada. Valores $p$ e intervalos completos en la tabla procesada.}\end{table}
+\FloatBarrier
+
+\subsection{Recuperación y alcance del rezago}
+La figura \ref{fig:trayectoria} muestra promedios simples de índices departamentales. La senda enclave es \EnclaveFirst, \EnclaveSecond\ y \EnclaveThird\ entre 2021 y 2023, inferior a 100 en los tres años. Al cierre, los otros perfiles registran \AgroFinal\ (diversificado/agro), \ServicesFinal\ (servicios/manufactura) y \MiningFinal\ (minero diversificado). Son diferencias descriptivas; la media de índices no equivale al índice de la suma del VAB de cada grupo.
+
+M5 estima para enclave un cambio relativo de \CovidEnclaveBeta\ puntos en 2020 ($p=\CovidEnclaveP$) y de \ScarBeta\ puntos en \PostStart--\PostEnd\ ($p=\ScarP$), respecto al perfil de referencia y a 2017--2019 (tabla \ref{tab:niveles}). El segundo intervalo al \ConfidencePct\% es [\ScarLow, \ScarHigh]. La normalización fuerza igualdad en 2019; diferencias en las sendas de 2017 y 2018 también inciden en el contraste entre periodos. Por ello no se interpreta como una pérdida absoluta de \ScarBeta\ puntos desde 2019.
+
+La interacción continua de recuperación de M6 es \ContinuousBeta\ puntos por una desviación estándar adicional de extracción previa ($p=\ContinuousP$). Su dirección coincide con el contraste categórico, pero el intervalo convencional al 95\% incluye cero. No confirma por sí misma una relación causal o un gradiente preciso. La figura \ref{fig:forest} compara M1, M4 y M5 con escalas independientes para tasas e índices y unidades explícitas.
+
+\figura{fig5_trayectoria_vab_indexado.pdf}{VAB real indexado, \BaseYear\ = 100}{fig:trayectoria}{Promedios sin ponderar de índices departamentales de \LevelStart--\LevelEnd. La línea horizontal señala el nivel de 2019 y la banda vertical 2020. Se omiten bandas de error estándar selectivas que no representan inferencia para todos los grupos.}
+\begin{table}[htbp]\centering\small\input{../resultados/niveles.tex}
+\caption{Índice de VAB real, M5--M6}\label{tab:niveles}
+\nota{Errores estándar agrupados por departamento entre paréntesis. M5: referencia diversificado/agro; M6: extracción estandarizada. Periodo temporal omitido: \LevelStart--\PreEnd.}\end{table}
+\figura{fig6_forest_plot_modelos.pdf}{Cambios relativos en tasas e índices}{fig:forest}{IC al \ConfidencePct\% obtenidos del estimador con errores agrupados; se muestran sin truncar. Referencia: diversificado/agro. Las ventanas temporales de tasas y niveles difieren.}
+\FloatBarrier

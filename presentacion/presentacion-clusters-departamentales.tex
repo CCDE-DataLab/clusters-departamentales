@@ -1,55 +1,141 @@
-\documentclass[aspectratio=169,11pt,table]{beamer}
+\documentclass[aspectratio=169,11pt]{beamer}
 \usepackage{../assets/ccde-beamer}
-
-%% ---------- Metadatos (plantilla canónica CCDE: \date{} siempre vacío) ----------
-\renewcommand{\ccdefootlabel}{CCDE -- Estructura Productiva Regional y Cicatriz COVID-19}
-\title{Estructura Productiva Departamental y Vulnerabilidad Macroeconómica en el Perú}
-\subtitle{Análisis Composicional (CoDa), Clustering Jerárquico y Efecto Cicatriz Post-COVID-19}
-\author{Círculo de Ciencia de Datos y Econometría}
+\graphicspath{{../figures/}}
+\input{../resultados/cifras.tex}
+\title{Estructura productiva y recuperación regional}
+\author{Círculo de Ciencia de Datos y Econometría (CCDE)}
 \date{}
-
 \begin{document}
-
-% ================================================================
-% PORTADA OFICIAL CCDE (SIN FECHA POR NORMA CANÓNICA)
-% ================================================================
 \ccdeportada{Estructura Productiva y Cicatriz COVID-19}{Tipología Composicional (CLR/ILR) y Econometría de Panel en los 24 Departamentos del Perú}{CCDE}
 
-% ================================================================
-% MAPA DE LA INVESTIGACIÓN Y TESIS CENTRAL (PIRÁMIDE DE MINTO)
-% ================================================================
-\begin{frame}{Mapa de la Investigación y Tesis Central}
-\vspace{-0.08cm}
+\begin{frame}[t]{Los enclaves aún no recuperan el nivel de 2019}
+\vspace{.3cm}
 \begin{columns}[T,onlytextwidth]
-\begin{column}{0.53\textwidth}
-{\footnotesize\tableofcontents}
-\end{column}
-\hfill
-\begin{column}{0.43\textwidth}
-\begin{keybox}[left=2mm,right=2mm,top=1.2mm,bottom=1.2mm,fontupper=\scriptsize\RaggedRight]
-\textbf{Tesis Central (Top-Down Takeaway)}\\[0.08cm]
-El choque de 2020 paralizó transversalmente todas las regiones ($\approx -14.4\%$), pero la \textbf{hiper-especialización en enclaves mineros} multiplicó por $4.4\times$ la volatilidad histórica y generó una \textbf{cicatriz pospandemia de $-10.92$ puntos} ($p = 0.0029$) entre 2021 y 2023.
-\end{keybox}
-\vspace{0.10cm}
-\begin{ccdebox}[left=2mm,right=2mm,top=1.2mm,bottom=1.2mm]
-\scriptsize\RaggedRight
-\textbf{Cobertura Empírica}\\
-INEI: 24 departamentos, periodo 2008--2025 ($N=428$ obs.\ de panel; 12 sectores productivos).\\[0.06cm]
-\textbf{Arsenal Metodológico}\\
-CoDa (Aitchison CLR/ILR) + PCA + Ward/K-Means/PAM/GMM + Panel FE con errores clusterizados.
-\end{ccdebox}
-\end{column}
+\begin{column}{.31\textwidth}\metric{\EnclaveFinal}{VAB de enclaves en \LevelEnd\\Base \BaseYear\ = 100}{warn}\end{column}
+\begin{column}{.31\textwidth}\metric{\MiningFinal}{Índice minero\\diversificado en \LevelEnd}{purplex}\end{column}
+\begin{column}{.31\textwidth}\metric{\ScarBeta}{Diferencial relativo en\\\PostStart--\PostEnd\ (M5)}{ccdeaccent}\end{column}
 \end{columns}
+\vspace{.35cm}
+\large La recuperación difiere entre perfiles productivos.\\[.15cm]
+\normalsize Primero identificamos la estructura previa; después distinguimos el rebote anual del nivel recuperado.
+\source{INEI, base local; promedios departamentales sin ponderar y modelo M5. Asociación descriptiva, sin identificación causal.}
 \end{frame}
 
-% ================================================================
-% SECCIONES MODULARES EMPÍRICAS
-% ================================================================
-\input{sections/01-motivacion-datos.tex}
-\input{sections/02-clustering-composicional.tex}
-\input{sections/03-volatilidad-puzzle-tasas.tex}
-\input{sections/04-cicatriz-niveles-indexados.tex}
-\input{sections/05-conclusiones-reproducibilidad.tex}
+\begin{frame}[t]{Una misma pregunta requiere tres ventanas}
+\vspace{.25cm}
+\begin{columns}[T,onlytextwidth]
+\begin{column}{.31\textwidth}\begin{keybox}\large\bfseries \PreStart--\PreEnd\par\medskip\normalfont\normalsize Estructura previa\par\smallskip\small \Departments\ departamentos\\\Sectors\ actividades armonizadas\\Promedio de participaciones\end{keybox}\end{column}
+\begin{column}{.31\textwidth}\begin{keybox}\large\bfseries \RateStart--\RateEnd\par\medskip\normalfont\normalsize Crecimiento anual\par\smallskip\small \RatesObs\ observaciones\\Panel balanceado\\Modelos M1--M4\end{keybox}\end{column}
+\begin{column}{.31\textwidth}\begin{keybox}\large\bfseries \LevelStart--\LevelEnd\par\medskip\normalfont\normalsize Nivel recuperado\par\smallskip\small \LevelsObs\ observaciones\\Base \BaseYear\ = 100\\Modelos M5--M6\end{keybox}\end{column}
+\end{columns}
+\vspace{.35cm}
+\normalsize La base local contiene \BaseObs\ filas de \BaseStart--\BaseEnd. Se excluyen los años finales incompletos para mantener las muestras balanceadas.
+\source{Libros INEI, cuadros 1 y 2. La magnitud observada es valor agregado bruto (VAB) real; «PIB» era el nombre heredado de la variable.}
+\end{frame}
 
+\chartframe{Cuatro perfiles resumen la estructura previa}{fig1_pca_clusters.pdf}
+{Los dos primeros componentes conservan el \PcaCumulative\% de la varianza CLR. El mapa muestra posiciones departamentales; las cargas sectoriales se documentan en el artículo.}
+{INEI. CLR y PCA del promedio \PreStart--\PreEnd; Ward K=4.}
+
+\chartframe{La extracción distingue dos perfiles mineros}{fig3_perfiles_sectoriales.pdf}
+{Los grupos mineros reúnen \MacroMiningCount\ departamentos; los otros perfiles reúnen \MacroOtherCount. Esta agregación económica es distinta del corte Ward K=2.}
+{INEI. Medias sin ponderar entre departamentos; las barras suman 100\%.}
+
+\chartframe{K=4 es una tipología útil, con criterios en tensión}{fig2_validacion_clustering.pdf}
+{K=2 lidera en silueta (\SilMacro); K=4 alcanza Jaccard Ward de \JaccardWard\%. La regla Gap de un error estándar selecciona K=\GapChoice.}
+{\SpecCount\ configuraciones; Gap con \GapReplicas\ réplicas; submuestreo del \SubsamplePct\% sin reemplazo, \StabilityReplicas\ réplicas.}
+
+\chartframe{Un episodio extremo influye en la volatilidad}{fig4_volatilidad_estructural.pdf}
+{La desviación estándar de enclave es \SdRatio\ veces la del perfil diversificado/agro. Es una comparación descriptiva que incluye pandemia y rebote.}
+{Panel \RateStart--\RateEnd, \RatesObs\ observaciones. M4 excluye Apurímac 2016 como sensibilidad, sin borrar el dato original.}
+
+\begin{frame}[t]{Un rebote positivo puede dejar el nivel por debajo de 100}
+\vspace{.3cm}
+\begin{keybox}
+\centering\Large Ejemplo aritmético\par\medskip
+\Huge $100 \times (1-0.12) \times (1+0.09) = 95.92$
+\end{keybox}
+\vspace{.3cm}
+\begin{columns}[T,onlytextwidth]
+\begin{column}{.47\textwidth}\large\textbf{Las tasas miden cambios}\par\medskip\normalsize Una caída de 12\% seguida de crecimiento de 9\% deja una pérdida acumulada de 4.08\%.\end{column}
+\begin{column}{.47\textwidth}\large\textbf{El índice mide el nivel}\par\medskip\normalsize M1--M4 estudian crecimiento anual. M5--M6 estudian el nivel relativo a \BaseYear. Cada variable responde una pregunta distinta.\end{column}
+\end{columns}
+\source{Ejemplo ilustrativo; los porcentajes de esta lámina no son estimaciones del panel.}
+\end{frame}
+
+\chartframe{Los enclaves quedan bajo 100 durante la recuperación}{fig5_trayectoria_vab_indexado.pdf}
+{El índice medio de enclave es \EnclaveFirst\ en 2021, \EnclaveSecond\ en 2022 y \EnclaveThird\ en 2023. Los otros tres perfiles superan 100 al cierre.}
+{INEI. Promedio simple del índice de cada departamento; no es el VAB agregado del grupo.}
+
+\chartframe{Las tasas y los niveles muestran contrastes distintos}{fig6_forest_plot_modelos.pdf}
+{Los intervalos muestran la incertidumbre. M5 estima un cambio relativo de \ScarBeta\ puntos en enclaves durante \PostStart--\PostEnd\ ($p=\ScarP$).}
+{PanelOLS con efectos fijos departamentales; IC de la distribución t del estimador, errores agrupados por departamento. Escalas independientes.}
+
+\begin{frame}[t]{Cómo interpretar el diferencial de \ScarBeta\ puntos}
+\vspace{.2cm}
+\begin{columns}[T,onlytextwidth]
+\begin{column}{.47\textwidth}
+\metric{\ScarBeta}{Puntos del índice · M5}{warn}
+\normalsize IC \ConfidencePct\%: [\ScarLow, \ScarHigh].\\[.15cm]
+Periodo: \PostStart--\PostEnd.\\
+Referencia productiva: diversificado/agro.\\
+Referencia temporal: \LevelStart--\PreEnd.
+\end{column}
+\begin{column}{.47\textwidth}
+\begin{keybox}\large\textbf{Cambio relativo}\par\medskip\normalsize Es la diferencia entre cambios de ambos grupos respecto a sus niveles medios del periodo previo. No es la brecha de VAB de un solo año.\end{keybox}
+\normalsize El predictor continuo M6 apunta en la misma dirección: \ContinuousBeta\ puntos por una desviación estándar de extracción ($p=\ContinuousP$); evidencia imprecisa al 5\%.
+\end{column}
+\end{columns}
+\source{M5--M6: \LevelsObs\ observaciones y \Departments\ departamentos. El índice base no construye un contrafactual sin pandemia.}
+\end{frame}
+
+\begin{frame}[t]{Tres límites delimitan las conclusiones}
+\vspace{.1cm}
+\begin{keybox}\small\textbf{Clasificación sensible a la representación}\par
+PCA3 e ILR completo modifican la partición. K=4 no es un óptimo universal.\end{keybox}
+\begin{keybox}\small\textbf{Inferencia con pocas unidades}\par
+Hay \EnclaveCount\ departamentos enclave y \Departments\ grupos de inferencia. La muestra pequeña limita la precisión.\end{keybox}
+\begin{keybox}\small\textbf{Persistencia observada, sin atribución causal}\par
+No se separan pandemia, conflictos e inversión. El horizonte hasta \LevelEnd\ no demuestra un daño permanente.\end{keybox}
+\source{Discusión y sensibilidades del artículo CCDE.}
+\end{frame}
+
+\begin{frame}[t]{Monitorear niveles recuperados y heterogeneidad regional}
+\vspace{.45cm}
+\large\textbf{1. Ampliar el tablero regional}\par\medskip
+\normalsize Combinar tasas anuales con índices de nivel y trayectorias departamentales.\par
+\vspace{.35cm}
+\large\textbf{2. Examinar los enclaves por separado}\par\medskip
+\normalsize La agregación de todos los departamentos mineros oculta diferencias de recuperación.\par
+\vspace{.35cm}
+\large\textbf{3. Investigar los mecanismos}\par\medskip
+\normalsize Contrastar inversión, conflictividad y vínculos productivos con nuevos datos antes de atribuir causas o recomendar instrumentos específicos.
+\source{Síntesis CCDE. Las prioridades de investigación se derivan de asociaciones; no constituyen una evaluación de políticas.}
+\end{frame}
+
+\appendix
+\chartframe{Anexo · Ward K=2 separa \WardSmallCount\ y \WardLargeCount\ departamentos}{fig3b_jerarquia_ward.pdf}
+{El corte jerárquico K=2 aísla el perfil diversificado/agro. La agregación económica minero/diversificado de \MacroMiningCount/\MacroOtherCount\ unidades se construye desde K=4.}
+{Ward sobre CLR + PCA2. Las alturas de corte se calculan a partir de las fusiones, sin fijarlas manualmente.}
+
+\begin{frame}[t]{Anexo · Seis modelos con una fuente de resultados}
+\vspace{.2cm}\centering
+{\small\input{../resultados/modelos.tex}}
+\par\vspace{.35cm}\RaggedRight\normalsize
+Los modelos incluyen efectos fijos departamentales y errores agrupados por departamento. El $R^2$ de tasas y niveles no es un criterio de superioridad entre variables y muestras distintas.
+\source{Resultados generados por el pipeline; tablas completas, errores estándar e intervalos en el artículo y los archivos procesados.}
+\end{frame}
+
+\begin{frame}[t]{Anexo · Referencias y reproducción}
+\small
+\textbf{INEI.} Cuentas departamentales a precios constantes de 2007. Libros fuente conservados en el repositorio.\par\medskip
+\textbf{Aitchison (1986).} \textit{The Statistical Analysis of Compositional Data}.\par\medskip
+\textbf{Martín-Fernández et al. (2003).} Tratamiento de ceros; \textbf{Egozcue et al. (2003).} Coordenadas ILR.\par\medskip
+\textbf{Tibshirani et al. (2001).} Gap; \textbf{Hennig (2007).} Estabilidad de grupos.\par\medskip
+\normalsize\textbf{Un solo flujo de reproducción}\par\smallskip
+\texttt{python src/generar\_analisis\_completo.py}\par
+\texttt{python src/compilar.py}\par\medskip
+\footnotesize\url{https://github.com/CCDE-DataLab/clusters-departamentales}
+\source{Referencias bibliográficas y enlaces completos en el artículo CCDE. Configuración metodológica en config/analisis.toml.}
+\end{frame}
 \end{document}
-

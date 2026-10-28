@@ -1,0 +1,42 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish,es-nodecimaldot]{babel}
+\usepackage{lmodern,microtype,amsmath,amssymb,graphicx,booktabs,array,placeins}
+\usepackage[margin=2.4cm,headheight=14pt]{geometry}
+\usepackage{xcolor,hyperref,fancyhdr}
+\definecolor{ccdenavy}{HTML}{0A1E40}
+\definecolor{ccdeblue}{HTML}{0077B6}
+\hypersetup{colorlinks=true,linkcolor=ccdenavy,urlcolor=ccdeblue,citecolor=ccdeblue,pdftitle={Estructura productiva y recuperacion departamental en el Peru},pdfauthor={Circulo de Ciencia de Datos y Econometria (CCDE)}}
+\graphicspath{{../figures/}}
+\input{../resultados/cifras.tex}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textcolor{ccdenavy}{CCDE | Documento de trabajo}}
+\fancyhead[R]{\small Estructura productiva regional}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0pt}
+\setlength{\parskip}{.35em}
+\setlength{\parindent}{1.2em}
+\setlength{\emergencystretch}{2em}
+\renewcommand{\arraystretch}{1.15}
+\newcommand{\nota}[1]{\par\vspace{.2em}{\footnotesize\textit{Nota:} #1\par}}
+\newcommand{\figura}[4]{\begin{figure}[htbp]\centering\includegraphics[width=\linewidth,height=.62\textheight,keepaspectratio]{#1}\caption{#2}\label{#3}\nota{#4}\end{figure}}
+\title{\textcolor{ccdenavy}{Estructura productiva y recuperación departamental en el Perú}\\[.35em]\large Análisis composicional, volatilidad y persistencia del rezago tras el COVID-19}
+\author{Círculo de Ciencia de Datos y Econometría (CCDE)}
+\date{Documento de trabajo · Octubre de 2026}
+\begin{document}
+\maketitle
+\begin{center}\includegraphics[width=1.75cm]{../assets/ccde-logo-positivo.png}\end{center}
+\begin{abstract}
+La recuperación posterior a 2020 fue heterogénea entre los departamentos del Perú. Estudiamos su relación con la estructura productiva previa mediante análisis composicional y modelos de panel con efectos fijos departamentales. Las participaciones de \Sectors\ actividades en \PreStart--\PreEnd\ se transforman mediante logaritmos de cocientes y se resumen con componentes principales. Una tipología Ward distingue cuatro perfiles: baja extracción, servicios y manufactura, minería diversificada y enclaves mineros. La validación muestra criterios en tensión: K=2 presenta mayor silueta, K=4 mayor estabilidad entre las particiones evaluadas y la regla Gap de un error estándar selecciona K=\GapChoice. En un panel del crecimiento del valor agregado bruto (VAB) real de \RateStart--\RateEnd\ (\RatesObs\ observaciones), la dispersión limita la precisión de algunos contrastes. En niveles indexados a \BaseYear\ = 100, con \LevelsObs\ observaciones de \LevelStart--\LevelEnd, los enclaves registran un cambio relativo de \ScarBeta\ puntos en \PostStart--\PostEnd\ frente al perfil diversificado/agro y al periodo \LevelStart--\PreEnd\ (IC \ConfidencePct\%: [\ScarLow, \ScarHigh]; $p=\ScarP$). Su índice medio cierra \LevelEnd\ en \EnclaveFinal. Los resultados documentan persistencia observada del rezago, sin identificar un efecto causal exclusivo de la pandemia ni demostrar una pérdida permanente de producción.
+\end{abstract}
+\noindent\textbf{Palabras clave:} economía regional, VAB departamental, datos composicionales, clustering, efectos fijos, COVID-19.\par
+\noindent\textbf{JEL:} C23, C38, R11.
+\clearpage
+\input{sections/01-introduccion-datos.tex}
+\input{sections/02-metodologia.tex}
+\input{sections/03-resultados.tex}
+\input{sections/04-discusion-reproduccion.tex}
+\input{sections/05-referencias-anexos.tex}
+\end{document}

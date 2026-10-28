@@ -1,0 +1,27 @@
+\begin{thebibliography}{9}
+\bibitem{aitchison} Aitchison, J. (1986). \textit{The Statistical Analysis of Compositional Data}. Chapman \& Hall.
+\bibitem{martin} Martín-Fernández, J. A., Barceló-Vidal, C. y Pawlowsky-Glahn, V. (2003). Dealing with zeros and missing values in compositional data sets using nonparametric imputation. \textit{Mathematical Geology}, 35, 253--278. \url{https://doi.org/10.1023/A:1023866030544}.
+\bibitem{egozcue} Egozcue, J. J., Pawlowsky-Glahn, V., Mateu-Figueras, G. y Barceló-Vidal, C. (2003). Isometric logratio transformations for compositional data analysis. \textit{Mathematical Geology}, 35, 279--300. \url{https://doi.org/10.1023/A:1023818214614}.
+\bibitem{gap} Tibshirani, R., Walther, G. y Hastie, T. (2001). Estimating the number of clusters in a data set via the gap statistic. \textit{Journal of the Royal Statistical Society, Series B}, 63(2), 411--423. \url{https://doi.org/10.1111/1467-9868.00293}.
+\bibitem{hennig} Hennig, C. (2007). Cluster-wise assessment of cluster stability. \textit{Computational Statistics \& Data Analysis}, 52(1), 258--271. \url{https://doi.org/10.1016/j.csda.2006.11.025}.
+\bibitem{inei} INEI. \textit{Producto Bruto Interno por Departamentos}. Portal de estadísticas y cuentas departamentales, base 2007. \url{https://m.inei.gob.pe/estadisticas/indice-tematico/producto-bruto-interno-por-departamentos-9089/}. Consulta: 28 de octubre de 2026. Libros utilizados en \texttt{data/raw}; véase el manifiesto de fuentes.
+\bibitem{linearmodels} Sheppard, K. y colaboradores. \textit{linearmodels: Panel models. Documentación de PanelOLS}. \url{https://bashtage.github.io/linearmodels/panel/model.html}. Versión de ejecución registrada en el manifiesto.
+\end{thebibliography}
+\clearpage
+\appendix
+\section{Clasificación y sensibilidades}
+\begin{table}[htbp]\centering\small\input{../resultados/departamentos.tex}
+\caption{Miembros de los perfiles Ward K=4}\end{table}
+\begin{table}[htbp]\centering\small\input{../resultados/validacion.tex}
+\caption{Validación de Ward sobre PCA2}
+\nota{Jaccard de submuestreo; no es una probabilidad de pertenencia. La regla Gap de un error estándar considera K=1.}\end{table}
+\begin{table}[htbp]\centering\small\input{../resultados/sensibilidad.tex}
+\caption{Sensibilidad de K=4}
+\nota{ARI frente a CLR+PCA2. Cambiar delta no perturba la composición porque los promedios observados no contienen ceros.}\end{table}
+\FloatBarrier
+\figura{fig3b_jerarquia_ward.pdf}{Jerarquía Ward y cortes derivados de las fusiones}{fig:jerarquia}{Colores de nombres según K=4. K=2 separa \WardSmallCount\ y \WardLargeCount\ unidades; no es la agregación económica \MacroMiningCount/\MacroOtherCount. Los cortes se calculan entre alturas consecutivas.}
+\FloatBarrier
+\section{Cargas de componentes principales}
+\begin{table}[htbp]\centering\small\input{../resultados/cargas_pca.tex}
+\caption{Cargas PCA de las actividades armonizadas}
+\nota{CLR centrado, sin estandarizar columnas. Los signos pueden invertirse sin alterar la geometría. Las cargas no son coeficientes de una regresión del VAB.}\end{table}

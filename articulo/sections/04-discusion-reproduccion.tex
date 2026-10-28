@@ -1,0 +1,25 @@
+\section{Discusión y limitaciones}
+Denominamos \textit{cicatriz} al rezago observado del nivel de actividad durante el horizonte disponible. No implica demostrar histéresis permanente, pérdida de producto potencial ni distancia frente a una senda sin pandemia. Un índice inferior a 100 indica producción menor que en el año base; uno superior a 100 tampoco descarta pérdida frente a un contrafactual creciente.
+
+Hay cuatro límites principales. Primero, la clasificación se estima sobre 24 composiciones y depende del número de componentes y grupos. Revisar varias métricas antes de elegir una partición introduce discrecionalidad. Los cambios con PCA3 e ILR completo muestran que esa incertidumbre importa. Los errores de las regresiones no propagan la incertidumbre de clasificación ni posibles errores de medición sectorial.
+
+Segundo, los efectos fijos controlan factores constantes, pero no tendencias específicas, choques anuales no capturados o cambios simultáneos de proyectos e instituciones. Clasificar con información previa evita utilizar los resultados de recuperación al asignar grupos, pero no garantiza exogeneidad. La igualdad mecánica en 2019 tampoco verifica tendencias paralelas. Un estudio de eventos con efectos anuales y una estrategia de identificación explícita son extensiones, no validaciones ya realizadas.
+
+Tercero, el perfil enclave comprende tres unidades. Los \Departments\ grupos de inferencia son pocos para confiar irrestrictamente en aproximaciones asintóticas; la precisión puede depender de departamentos concretos. Correcciones apropiadas para pocos grupos, un bootstrap de conglomerados compatible con el diseño y exclusiones por departamento serían verificaciones adicionales. El submuestreo de clustering no satisface esas necesidades econométricas.
+
+Cuarto, la comparación es territorial y sectorial, no distributiva. No permite concluir sobre empleo, bienestar, ingresos fiscales, encadenamientos o eficacia del canon. Profundizar vínculos productivos o gestionar riesgos requiere datos y evaluaciones específicas. La aplicación inmediata es un tablero que distinga crecimiento, niveles recuperados y exposición sectorial, sin convertir asociaciones en recomendaciones causales.
+
+\section{Conclusiones}
+La estructura previa permite organizar los departamentos en perfiles útiles para comparar desempeño. K=4 describe diferencias, pero los criterios no convergen en un único número de grupos y la clasificación cambia con la representación. El corte Ward K=2 y la agregación económica minero/diversificado deben mantenerse separados.
+
+Combinar tasas e índices muestra por qué el rebote no resume la recuperación. Los enclaves presentan mayor dispersión y su índice medio permanece bajo el nivel de 2019 hasta 2023. El contraste de efectos fijos es consistente con un cambio relativo desfavorable en 2021--2023, sujeto a los límites de muestra e identificación descritos.
+
+El siguiente paso es contrastar mecanismos con inversión, operaciones y conflictividad, ampliar el horizonte con cobertura comparable y evaluar diseños alternativos. Hasta entonces, el resultado es evidencia de heterogeneidad y persistencia observada del rezago departamental.
+
+\section{Reproducibilidad}
+El repositorio conserva los libros fuente y la base consolidada. Los supuestos se centralizan en \texttt{config/analisis.toml}. El comando \texttt{python src/generar\_analisis\_completo.py} regenera composiciones, coordenadas, métricas, etiquetas, panel, estimaciones, figuras y tablas LaTeX. Este documento y la presentación importan las mismas cifras generadas, sin transcribir coeficientes manualmente.
+
+El manifiesto \texttt{data/processed/resultados.json} registra cobertura, supuestos, versiones y huellas SHA-256 de entrada y fuentes. Las versiones utilizadas se fijan en \texttt{requirements.txt}. Los cuadernos cargan las salidas finales y no duplican modelos. El comando \texttt{python src/compilar.py} compila artículo y presentación, y actualiza PowerPoint desde las páginas finales del PDF. Las verificaciones numéricas y estructurales se ejecutan con \texttt{python src/verificar.py}.
+
+\noindent Repositorio: \url{https://github.com/CCDE-DataLab/clusters-departamentales}.
+\FloatBarrier

@@ -1,0 +1,124 @@
+{
+  "config": {
+    "datos": {
+      "entrada": "data/processed/pbi_departamental_consolidado.xlsx",
+      "salida": "data/processed",
+      "figuras": "figures"
+    },
+    "muestra": {
+      "pre_inicio": 2015,
+      "pre_fin": 2019,
+      "tasas_inicio": 2008,
+      "tasas_fin": 2023,
+      "niveles_inicio": 2017,
+      "niveles_fin": 2023,
+      "base": 2019,
+      "choque": 2020,
+      "post_inicio": 2021,
+      "post_fin": 2023
+    },
+    "clustering": {
+      "semilla": 0,
+      "delta_ceros": 0.05,
+      "componentes": 2,
+      "k_tipologia": 4,
+      "k_macro": 2,
+      "k_evaluados": [
+        2,
+        3,
+        4,
+        5
+      ],
+      "gap_replicas": 30,
+      "estabilidad_replicas": 100,
+      "fraccion_submuestra": 0.8,
+      "sensibilidad_delta": [
+        0.01,
+        0.05,
+        0.1
+      ]
+    },
+    "econometria": {
+      "confianza": 0.95,
+      "exclusion_departamento": "Apurímac",
+      "exclusion_anio": 2016
+    },
+    "visual": {
+      "dpi": 240
+    }
+  },
+  "diagnostico": {
+    "gap_regla_1ee_k": 1,
+    "levene": {
+      "stat": 3.598357641122534,
+      "p": 0.013723104762759602
+    },
+    "fligner": {
+      "stat": 16.54272423668461,
+      "p": 0.0008774869436242939
+    },
+    "ratio_desviaciones": 4.329509894893818,
+    "ceros": 0,
+    "n_sectores": 11,
+    "n_departamentos": 24,
+    "n_base": 428,
+    "n_tasas": 384,
+    "n_niveles": 168
+  },
+  "cobertura": {
+    "2008": 24,
+    "2009": 24,
+    "2010": 24,
+    "2011": 24,
+    "2012": 24,
+    "2013": 24,
+    "2014": 24,
+    "2015": 24,
+    "2016": 24,
+    "2017": 24,
+    "2018": 24,
+    "2019": 24,
+    "2020": 24,
+    "2021": 24,
+    "2022": 24,
+    "2023": 24,
+    "2024": 22,
+    "2025": 22
+  },
+  "sha256_entrada": "00925a04d06f40453d34c4dabb08fca7842c11d82b98b1454d2976e4d5c7976b",
+  "sha256_fuentes": {
+    "pbi_dep01_17.xlsx": "cb8ac1cb476240d36b055a944474895a9717be3e7bb82d8f7a0bcaaf688b216f",
+    "pbi_dep02_17.xlsx": "99870763067f0318769e429e76835171f8f257e3f8a7c1f31655a0c63bbc2829",
+    "pbi_dep03_17.xlsx": "40bac7dfc20dea7d52713db20faf4cc0693bd3b5e003ab1ed75691cec83351f0",
+    "pbi_dep04_17.xlsx": "4a05287856d70135b9f97948ca782eb8af06818602a3fff622eea8d4b4b3f96d",
+    "pbi_dep05_17.xlsx": "eb15aca71ef7f6299cec98e105c9371dd3cc8ffde183c6d3c98b49250fab6ee1",
+    "pbi_dep06_17.xlsx": "daee3239df357cca63a19c23b561b9583775b443184e72a573b709221d87f2db",
+    "pbi_dep07_17.xlsx": "48f6e766349c6093e170b9c3ad1ffb27726573ebf9dacde5e689fed2a2636b2a",
+    "pbi_dep08_17.xlsx": "b50f0847e9c4266cd30dd9502c23a76f5848817720adc60290eb0daaa9daa985",
+    "pbi_dep09_17.xlsx": "517f66066ea72bb397084c98a5be4860247664dfef029ae52b5b481615ac558c",
+    "pbi_dep10_17.xlsx": "e5b05146feb9bc8f783d0f878cd06affbfbb31caa2f20717e7bd119fa6d1db20",
+    "pbi_dep11_17.xlsx": "05267586096b5ba4497afcde6fd1e5b25e6c4de22dbc4e104d958bbe51479cd4",
+    "pbi_dep12_18.xlsx": "19cf7df96b83f587af0eec54abf677391317959a18d002d8f4acb72c4ca0aec1",
+    "pbi_dep13_17.xlsx": "01480c5ffdb53a29491cbacfcc76c60cedc722f3cc0d03502c7627f3a74d2516",
+    "pbi_dep14_17.xlsx": "52fd8ee3b2702b4b93ec7645ee1b676cae803381043fd882971bf7c52e5d3f0a",
+    "pbi_dep15_18.xlsx": "1af6c49a45342e351eda90f83b5f9067f3fd0576430b0c487162ebad75c8ee7b",
+    "pbi_dep16_17.xlsx": "2fae6dfaa99b1737848f3d799086e91b78cee898e1408a7b3336cf649ee68ba0",
+    "pbi_dep17_17.xlsx": "03e75a79bd1ffcbed4fb1624d41be664eda484bd6aabfb3403667bcecf236fe7",
+    "pbi_dep18_17.xlsx": "21c785096b6fa118d47a3c073b383c685fd9b891f2d4e7c90ad1deac9f6b01b4",
+    "pbi_dep19_17.xlsx": "a43212a497c02a7fa61b07370273888ee5750d03e98400de1622466b8682365b",
+    "pbi_dep20_17.xlsx": "c5d8b1a4fdc182a416b875af3a4351edcfd2b3a580a817b46ad2710d290bfed4",
+    "pbi_dep21_17.xlsx": "a0572569e5ab9f7e0507431875ca31c3eae5f8064fe65162d253cea13fd196b7",
+    "pbi_dep22_17.xlsx": "f0617af770b493f521cfb91d5483518ca35e506a1e3d1b4ad9ccbd3a6cf48de9",
+    "pbi_dep23_17.xlsx": "01b6f64bf59787deb13deed18def27d1516ef2ef3bb4585f18a7c2cd101487e0",
+    "pbi_dep24_18.xlsx": "f80e13a8f779fb6be853246f9586f041d1113f8de748f7590b3911e5a8216bba"
+  },
+  "versiones": {
+    "numpy": "2.0.2",
+    "pandas": "3.0.3",
+    "scipy": "1.13.0",
+    "scikit-learn": "1.8.0",
+    "linearmodels": "7.0",
+    "matplotlib": "3.10.9",
+    "adjustText": "1.4.0"
+  }
+}
