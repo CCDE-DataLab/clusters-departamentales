@@ -182,9 +182,18 @@ def trayectoria(study):
 
 def forest(study):
     confidence = study.config["econometria"]["confianza"]
-    parameters = [(f"{period}:Nombre_Cluster_K4[T.{name}]", f"{'2020' if period == 'COVID' else '2021–2023'} · {SHORT[name]}", name) for period in ["COVID", "POST_21_23"] for name in ORDER[:0:-1]]
-    fig, axes = plt.subplots(1, 2, figsize=(14, 6.2), sharey=True, layout="constrained")
-    for axis, codes, title, unit in [(axes[0], ["M1", "M4"], "Tasas anuales", "Diferencial de crecimiento (pp)"), (axes[1], ["M5"], "Niveles indexados", "Diferencial del índice (puntos)")]:
+    sample = study.config["muestra"]
+    periods = {"COVID": str(sample["choque"]), "POST_21_23": f"{sample['post_inicio']}–{sample['post_fin']}"}
+    profile_labels = {ORDER[1]: "Servicios / manufactura", ORDER[2]: "Minero diversificado", ORDER[3]: "Enclave minero"}
+    parameters = [(f"{period}:Nombre_Cluster_K4[T.{name}]", f"{periods[period]} · {profile_labels[name]}", name) for period in periods for name in ORDER[:0:-1]]
+    fig = plt.figure(figsize=(12.5, 6.5), layout="constrained")
+    grid = fig.add_gridspec(2, 2, height_ratios=[1, .22], hspace=.05, wspace=.08)
+    axes = [fig.add_subplot(grid[0, 0])]
+    axes.append(fig.add_subplot(grid[0, 1], sharey=axes[0]))
+    legend_axes = [fig.add_subplot(grid[1, column]) for column in range(2)]
+    for axis in legend_axes:
+        axis.set_axis_off()
+    for axis, codes, title, unit in [(axes[0], ["M1", "M4"], "A. Tasas anuales (M1 y M4)", "Diferencial de crecimiento (pp)"), (axes[1], ["M5"], "B. Niveles indexados (M5)", "Diferencial del índice (puntos)")]:
         bounds = [0.]
         for code in codes:
             model = study.modelos[code]
@@ -198,14 +207,25 @@ def forest(study):
                 axis.errorbar(b, y+offset, xerr=np.array([[b-low], [high-b]]), fmt="D" if code == "M4" else "o", color=color, capsize=4, ms=7, lw=2)
         lower, upper = min(bounds), max(bounds)
         pad = (upper-lower)*.10
-        axis.set(xlim=(lower-pad, upper+pad), xlabel=f"{unit} · IC {confidence:.0%}", title=title)
+        axis.set(xlim=(lower-pad, upper+pad), xlabel=unit)
+        axis.set_title(title, fontsize=17, pad=14)
+        axis.tick_params(axis="x", labelsize=16)
         axis.axvline(0, color=NAVY, ls=":", lw=1.2)
         axis.axhline(2.5, color="#CBD5E1", lw=.8)
         axis.grid(axis="x")
     axes[0].set(yticks=range(len(parameters)), yticklabels=[p[1] for p in parameters], ylim=(len(parameters)-.45, -.65))
-    axes[0].tick_params(axis="y", labelsize=15)
-    axes[0].legend(handles=[Line2D([], [], marker="o", color="#94A3B8", label="M1 · muestra completa"), Line2D([], [], marker="D", color="#0077B6", label="M4 · sin Apurímac 2016")], loc="upper center", bbox_to_anchor=(.5, -.15), frameon=False, fontsize=14)
-    axes[1].text(.5, -.30, "M5 · referencia: diversificado / agro", transform=axes[1].transAxes, ha="center", fontsize=14)
+    axes[0].tick_params(axis="y", labelsize=16)
+    axes[1].tick_params(axis="y", labelleft=False)
+    legend_style = dict(loc="upper center", bbox_to_anchor=(.5, 1), borderaxespad=0,
+                        frameon=False, fontsize=17, handlelength=1.8, labelspacing=.4)
+    excluded = study.config["econometria"]
+    legend_axes[0].legend(handles=[
+        Line2D([], [], marker="o", color="#94A3B8", lw=2, markersize=7, label="M1 · muestra completa"),
+        Line2D([], [], marker="D", color="#0077B6", lw=2, markersize=7,
+               label=f"M4 · sin {excluded['exclusion_departamento']} {excluded['exclusion_anio']}")], **legend_style)
+    legend_axes[1].legend(handles=[
+        Line2D([], [], marker="o", color=COLORS[name], lw=2, markersize=7, label=profile_labels[name])
+        for name in ORDER[:0:-1]], **legend_style)
     guardar(fig, "fig6_forest_plot_modelos", study)
 
 
