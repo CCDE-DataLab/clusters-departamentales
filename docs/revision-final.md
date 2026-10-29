@@ -39,3 +39,11 @@ Se retiran scripts exploratorios reemplazados, paneles intermedios, antiguas sec
 `config/analisis.toml` centraliza supuestos; `analisis.py` estima; `figuras.py` dibuja; `publicar.py` genera cifras y tablas compartidas. Los cuadernos consultan salidas finales. `resultados.json` registra cobertura, versiones y huellas. Las comprobaciones, compilación y renderizado pueden repetirse con los comandos del README.
 
 La exportación PowerPoint contiene una imagen por página del PDF y texto en notas y descripciones. Conserva la composición final; la fuente editable es LaTeX.
+
+## Revisión de ramas · 29 de octubre de 2026
+
+Se revisaron los dos commits de `avance-benjamin` pendientes de integrar en `master`. La comparación de fuentes conserva las 428 filas originales y las estimaciones de los seis modelos.
+
+- Se impide perder silenciosamente un departamento que no tenga ninguna observación en la ventana previa. También se validan participaciones no negativas, VAB finito y positivo, cobertura del año base y presencia de la observación excluida en M4.
+- La auditoría compara la configuración vigente, el conjunto completo de fuentes y las huellas de los diez archivos procesados con el manifiesto. Admite `--config` para auditar el TOML utilizado en el análisis.
+- Se añaden 15 pruebas de regresión, ejecutables con `python -m unittest discover -s tests -v`, que incluyen alteraciones y ausencias de archivos y conservación de coeficientes, errores estándar, valores p e intervalos.

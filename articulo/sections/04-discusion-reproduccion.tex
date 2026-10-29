@@ -19,7 +19,7 @@ El siguiente paso es contrastar mecanismos con inversión, operaciones y conflic
 \section{Reproducibilidad}
 El repositorio conserva los libros fuente y la base consolidada. Los supuestos se centralizan en \texttt{config/analisis.toml}. El comando \texttt{python src/generar\_analisis\_completo.py} regenera composiciones, coordenadas, métricas, etiquetas, panel, estimaciones, figuras y tablas LaTeX. Este documento y la presentación importan las mismas cifras generadas, sin transcribir coeficientes manualmente.
 
-El manifiesto \texttt{data/processed/resultados.json} registra cobertura, supuestos, versiones y huellas SHA-256 de entrada y fuentes. Las versiones utilizadas se fijan en \texttt{requirements.txt}. Los cuadernos cargan las salidas finales y no duplican modelos. El comando \texttt{python src/compilar.py} compila artículo y presentación, y actualiza PowerPoint desde las páginas finales del PDF. Las verificaciones numéricas y estructurales se ejecutan con \texttt{python src/verificar.py}.
+El manifiesto \texttt{data/processed/resultados.json} registra cobertura, supuestos, versiones y huellas SHA-256 de entrada, fuentes y salidas procesadas. Las versiones utilizadas se fijan en \texttt{requirements.txt}. Los cuadernos cargan las salidas finales y no duplican modelos. El comando \texttt{python src/compilar.py} compila artículo y presentación, y actualiza PowerPoint desde las páginas finales del PDF. Las verificaciones numéricas y estructurales se ejecutan con \texttt{python src/verificar.py}; rechazan cambios de configuración o archivos posteriores al cálculo.
 
 \noindent Repositorio: \url{https://github.com/CCDE-DataLab/clusters-departamentales}.
 \FloatBarrier

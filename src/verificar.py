@@ -1,4 +1,5 @@
 """Audita fuentes, invariantes numéricos y consistencia de entregables finales."""
+import argparse
 import hashlib
 import json
 import re
@@ -10,14 +11,33 @@ from composicional import reemplazar_ceros, clr, ilr
 from consolidar import extraer, comprobar
 
 
+def verificar_trazabilidad(config, manifest):
+    if config != manifest["config"]:
+        raise ValueError("Configuración modificada tras el análisis; regenera las salidas")
+    source = ROOT / config["datos"]["entrada"]
+    if hashlib.sha256(source.read_bytes()).hexdigest() != manifest["sha256_entrada"]:
+        raise ValueError("Entrada modificada tras el análisis")
+    sources = {p.name: hashlib.sha256(p.read_bytes()).hexdigest() for p in (ROOT / "data/raw").glob("*.xlsx")}
+    if sources != manifest["sha256_fuentes"]:
+        raise ValueError("El conjunto de fuentes INEI cambió tras el análisis")
+    fingerprints = manifest.get("sha256_salidas")
+    if not fingerprints:
+        raise ValueError("Faltan huellas de las salidas; regenera el análisis")
+    output = ROOT / config["datos"]["salida"]
+    for name, fingerprint in fingerprints.items():
+        path = output / name
+        if not path.is_file() or hashlib.sha256(path.read_bytes()).hexdigest() != fingerprint:
+            raise ValueError(f"Salida modificada o ausente tras el análisis: {name}")
+
+
 def main():
-    config = cargar_config()
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--config", help="Ruta al TOML utilizado para generar el análisis")
+    config = cargar_config(parser.parse_args().config)
     output = ROOT / config["datos"]["salida"]
     manifest = json.loads((output / "resultados.json").read_text(encoding="utf-8"))
     source = ROOT / config["datos"]["entrada"]
-    assert hashlib.sha256(source.read_bytes()).hexdigest() == manifest["sha256_entrada"], "Entrada modificada tras el análisis"
-    for name, fingerprint in manifest["sha256_fuentes"].items():
-        assert hashlib.sha256((ROOT / "data/raw" / name).read_bytes()).hexdigest() == fingerprint
+    verificar_trazabilidad(config, manifest)
     comprobar(extraer(), source)
     panel = pd.read_excel(output / "panel_econometrico_final.xlsx")
     assert not panel.duplicated(["departamento", "anio"]).any()
@@ -59,7 +79,10 @@ def main():
     # M4 cambia solamente las interacciones del perfil que contiene la celda excluida.
     one = results[results.Modelo.eq("M1")].set_index("Parametro")
     four = results[results.Modelo.eq("M4")].set_index("Parametro")
-    unchanged = [p for p in one.index if p != "Intercept" and "Minero/Enclave" not in p]
+    excluded_profile = labels.loc[config["econometria"]["exclusion_departamento"], "Nombre_Cluster_K4"]
+    unchanged = [p for p in one.index if p != "Intercept" and f"[T.{excluded_profile}]" not in p]
+    if excluded_profile == ORDER[0]:
+        unchanged = []  # Al excluir en la referencia también cambian los contrastes relativos.
     np.testing.assert_allclose(one.loc[unchanged, "Coeficiente"], four.loc[unchanged, "Coeficiente"], atol=1e-10)
     macros = (ROOT / "resultados/cifras.tex").read_text(encoding="utf-8")
     values = dict(re.findall(r"\\newcommand\{\\(\w+)\}\{([^{}]+)\}", macros))

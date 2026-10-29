@@ -14,7 +14,7 @@ def reemplazar_ceros(x, delta=0.05):
     values = values / values.sum(axis=1, keepdims=True) * 100
     zeros = values == 0
     counts = zeros.sum(axis=1, keepdims=True)
-    if delta <= 0 or (counts * delta >= 100).any():
+    if not np.isfinite(delta) or delta <= 0 or (counts * delta >= 100).any():
         raise ValueError("delta incompatible con el cierre a 100")
     result = np.where(zeros, delta, values * (100 - counts * delta) / 100)
     return pd.DataFrame(result, index=x.index, columns=x.columns)

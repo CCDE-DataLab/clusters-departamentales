@@ -38,6 +38,10 @@ python src/verificar.py
 
 `python src/generar_analisis_completo.py --config ruta/al/analisis.toml` permite una configuración alternativa. Los parámetros son supuestos; las cifras se calculan. Los textos editoriales describen el diseño actual: cambiar ventanas o modelos exige revisar también su interpretación.
 
+Para auditar una configuración alternativa, utiliza `python src/verificar.py --config ruta/al/analisis.toml`. La tipología editorial requiere PCA2 y evaluar K=2 y K=4. La auditoría rechaza configuraciones, fuentes o salidas procesadas que hayan cambiado desde el cálculo registrado.
+
+Las pruebas de regresión se ejecutan con `python -m unittest discover -s tests -v`. Comprueban cobertura departamental, entradas inválidas, conservación de las estimaciones y detección de archivos desactualizados, sin escribir los entregables.
+
 Los cuadernos pueden ejecutarse en Jupyter usando este entorno. Leen panel, estimaciones, métricas y figuras; no mantienen otra implementación de los modelos.
 
 ## Inspección visual
@@ -63,4 +67,4 @@ resultados/             Cifras y tablas LaTeX generadas
 src/                    ETL, análisis, gráficos y verificaciones
 ```
 
-`data/processed/resultados.json` registra SHA-256 de entrada y fuentes, cobertura, configuración y versiones. Los perfiles son etiquetas relativas; diversificado/agro incluye Lima sin implicar predominio agrario en todos sus miembros. Los originales se conservan para auditoría.
+`data/processed/resultados.json` registra SHA-256 de entrada, fuentes y salidas procesadas, cobertura, configuración y versiones. Los perfiles son etiquetas relativas; diversificado/agro incluye Lima sin implicar predominio agrario en todos sus miembros. Los originales se conservan para auditoría.

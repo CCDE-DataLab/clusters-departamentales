@@ -120,5 +120,17 @@
     "linearmodels": "7.0",
     "matplotlib": "3.10.9",
     "adjustText": "1.4.0"
+  },
+  "sha256_salidas": {
+    "composiciones_pre.xlsx": "825e6cda67fd453f024a2ff234eb024a5e9c68b95f8845dea50a5f73f3fd8c5a",
+    "coordenadas_clr.xlsx": "c2f05760e0b31660ce103f1286b329cfe85d13684b47e70f6b806ddbef22d6ff",
+    "coordenadas_ilr.xlsx": "4aef4d6ff8ce39ad0e4b0aca438ca5c75041ee7eb33bb9baf5eadb5bcc2a8ff4",
+    "etiquetas_clusters.xlsx": "ac18bd5d8103c58bb305a13edf543aa47f27b6af0e6aea6a316a8b6dd45478ff",
+    "metricas_clustering.xlsx": "199cebc09abd29452ae608a023a0e4de3f7cb667ea280e084781715643562b04",
+    "validacion_clustering.xlsx": "938f7fd567625d729a2c33f0beb1977dd29323400d3a26804b7d4e40f7d193ad",
+    "sensibilidad_clustering.xlsx": "3783935a5c599adf625a743cd2c842b9fa90b257ce4fa37a20eaf73e3b78c8b2",
+    "panel_econometrico_final.xlsx": "fbab22d8a9e84bb786ebfbddb9abeffdefcded483f9295a023b6f0dd7fc6bf60",
+    "resumen_modelos_econometricos.xlsx": "3af481055698f8e74a5c5b9201d90b81d25b47c06e9e0f75612f3841a88c258e",
+    "volatilidad.xlsx": "ff72a2f1a9780bb4e8b435b038a2ecbb0eae06f49594cd812e030300113e6b35"
   }
 }

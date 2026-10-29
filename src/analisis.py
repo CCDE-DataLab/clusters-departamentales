@@ -49,6 +49,8 @@ def cargar_config(path=None):
     c, m = config["clustering"], config["muestra"]
     if c["k_tipologia"] != 4 or c["k_macro"] != 2:
         raise ValueError("La taxonomía editorial requiere cuatro perfiles y dos macrogrupos")
+    if c["componentes"] != 2 or not {2, 4}.issubset(c["k_evaluados"]):
+        raise ValueError("La tipología principal requiere PCA2 y evaluar al menos K=2 y K=4")
     if not m["pre_fin"] < m["choque"] or not m["base"] < m["choque"] < m["post_inicio"]:
         raise ValueError("La ventana estructural y la base deben preceder al choque")
     return config
@@ -57,15 +59,21 @@ def cargar_config(path=None):
 def ejecutar(config):
     m, c, e = config["muestra"], config["clustering"], config["econometria"]
     base = pd.read_excel(ROOT / config["datos"]["entrada"]).rename(columns={"año": "anio", "PIB_total": "VAB_total", "var_pib": "crecimiento_vab"})
+    if base.empty or base[["departamento", "anio"]].isna().any().any():
+        raise ValueError("La base debe contener departamentos y años completos")
     if base.duplicated(["departamento", "anio"]).any():
         raise ValueError("Hay duplicados departamento-año")
     if "Otros Servicios" in base:
         base["Otros Actividades/1"] = base["Otros Actividades/1"].fillna(0) + base.pop("Otros Servicios").fillna(0)
     sectors = base.columns.difference(["departamento", "anio", "VAB_total", "crecimiento_vab"], sort=False).tolist()
-    if base[sectors].isna().any().any() or not np.allclose(base[sectors].sum(axis=1), 100, atol=1e-6):
-        raise ValueError("Las participaciones sectoriales deben estar completas y sumar 100")
+    if not np.isfinite(base[sectors].to_numpy()).all() or base[sectors].lt(0).any().any() or not np.allclose(base[sectors].sum(axis=1), 100, atol=1e-6):
+        raise ValueError("Las participaciones sectoriales deben ser finitas, no negativas y sumar 100")
+    if not np.isfinite(base.VAB_total).all() or not base.VAB_total.gt(0).all():
+        raise ValueError("El VAB debe ser finito y positivo")
     pre = base[base.anio.between(m["pre_inicio"], m["pre_fin"])].copy()
-    if not pre.groupby("departamento").size().eq(m["pre_fin"] - m["pre_inicio"] + 1).all():
+    departments = pd.Index(base.departamento.unique(), name="departamento")
+    coverage = pre.groupby("departamento").size().reindex(departments, fill_value=0)
+    if not coverage.eq(m["pre_fin"] - m["pre_inicio"] + 1).all():
         raise ValueError("Ventana pre-COVID incompleta")
     shares = pre.groupby("departamento")[sectors].mean()
     rep = reemplazar_ceros(shares, c["delta_ceros"])
@@ -109,8 +117,8 @@ def ejecutar(config):
     info["Share_Mineria_15_19"] = shares[MINING]
     info["HHI_15_19"] = ((shares / 100) ** 2).sum(axis=1)
     info["Mineria_z"] = (shares[MINING] - shares[MINING].mean()) / shares[MINING].std(ddof=1)
-    panel = base.merge(info.reset_index(), on="departamento", validate="many_to_one")
-    base_pib = panel[panel.anio.eq(m["base"])].set_index("departamento").VAB_total
+    panel = base.merge(info.reset_index(), on="departamento", how="left", validate="many_to_one")
+    base_pib = panel[panel.anio.eq(m["base"])].set_index("departamento").VAB_total.reindex(departments)
     if base_pib.isna().any() or not base_pib.gt(0).all():
         raise ValueError("Falta un VAB base válido")
     panel["VAB_idx2019"] = panel.VAB_total / panel.departamento.map(base_pib) * 100
@@ -125,7 +133,10 @@ def ejecutar(config):
             raise ValueError("VAB ausente")
         if len(sample) != len(info) * (end - start + 1):
             raise ValueError("La muestra de estimación debe estar balanceada")
-    no_outlier = rates[~(rates.departamento.eq(e["exclusion_departamento"]) & rates.anio.eq(e["exclusion_anio"]))]
+    excluded = rates.departamento.eq(e["exclusion_departamento"]) & rates.anio.eq(e["exclusion_anio"])
+    if excluded.sum() != 1:
+        raise ValueError("M4 requiere exactamente una observación para la exclusión configurada")
+    no_outlier = rates[~excluded]
     def fit(sample, y, interaction):
         formula = f"{y} ~ 1 + COVID + POST_21_23 + COVID:{interaction} + POST_21_23:{interaction} + EntityEffects"
         return PanelOLS.from_formula(formula, data=sample.set_index(["departamento", "anio"])).fit(cov_type="clustered", cluster_entity=True, debiased=True)
@@ -146,8 +157,12 @@ def ejecutar(config):
 def guardar(study):
     output = ROOT / study.config["datos"]["salida"]
     output.mkdir(parents=True, exist_ok=True)
+    fingerprints = {}
     for name, frame, index in [("composiciones_pre", study.shares, True), ("coordenadas_clr", study.clr, True), ("coordenadas_ilr", study.ilr, True), ("etiquetas_clusters", study.etiquetas, True), ("metricas_clustering", study.metricas, False), ("validacion_clustering", study.validacion, False), ("sensibilidad_clustering", study.sensibilidad, False), ("panel_econometrico_final", study.panel, False), ("resumen_modelos_econometricos", study.resumen, False), ("volatilidad", study.volatilidad, True)]:
-        frame.to_excel(output / f"{name}.xlsx", index=index)
+        path = output / f"{name}.xlsx"
+        frame.to_excel(path, index=index)
+        fingerprints[path.name] = hashlib.sha256(path.read_bytes()).hexdigest()
     coverage = study.base.groupby("anio").departamento.nunique()
     manifest = {"config": study.config, "diagnostico": study.diagnostico, "cobertura": {str(k): int(v) for k, v in coverage.items()}, "sha256_entrada": hashlib.sha256((ROOT / study.config["datos"]["entrada"]).read_bytes()).hexdigest(), "sha256_fuentes": {p.name: hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted((ROOT / "data/raw").glob("*.xlsx"))}, "versiones": {name: importlib.metadata.version(name) for name in ["numpy", "pandas", "scipy", "scikit-learn", "linearmodels", "matplotlib", "adjustText"]}}
+    manifest["sha256_salidas"] = fingerprints
     (output / "resultados.json").write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
