@@ -20,44 +20,43 @@
 \begin{simplebox}
 \nota{Hallazgo principal} con base 2019 = 100, en 2023 los perfiles agro (\AgroFinal), servicios (\ServicesFinal) y minero diversificado (\MiningFinal) superaron su nivel prepandemia; los enclaves (Apurímac, Huancavelica y Pasco) promediaron \EnclaveFinal.
 \end{simplebox}
-\source{INEI, Cuentas Nacionales por Departamentos (precios constantes de 2007). Estimación condicional de panel (M5); no constituye identificación causal.}
+\source{INEI, Cuentas Nacionales por Departamentos (precios constantes de 2007). Elaboración propia (CCDE).}
 \end{frame}
 
 % ---------------------------------------------------------------- 2. Marco conceptual
 \begin{frame}[t]{Marco conceptual y medición de la actividad económica regional}
+\vspace{.08cm}
 \begin{columns}[T,onlytextwidth]
 \begin{column}{.485\textwidth}
-\begin{keybox}[equal height group=g3,top=1.5mm,bottom=1.5mm]
+\begin{keybox}[equal height group=g3,top=1.8mm,bottom=1.8mm]
 \termino{Valor Agregado Bruto (VAB real)}{Medida oficial del INEI para la producción regional a precios constantes de 2007 (PBI antes de impuestos).}
 \termino{Índice de volumen (2019 = 100)}{Compara el VAB real de cada región con su nivel de 2019; \EnclaveFinal\ indica un volumen 2.4\% menor al prepandemia.}
 {\small\textcolor{ccdeaccent}{\bfseries Tasa anual vs. nivel acumulado}}\par{\footnotesize La tasa mide la variación porcentual anual; el índice evalúa si se recuperó el nivel previo al choque.}
 \end{keybox}
 \end{column}
 \begin{column}{.485\textwidth}
-\begin{keybox}[equal height group=g3,top=1.5mm,bottom=1.5mm]
+\begin{keybox}[equal height group=g3,top=1.8mm,bottom=1.8mm]
 \termino{Estructura productiva (CLR/ILR)}{Participación de las \Sectors\ ramas en el VAB; al sumar 100\%, usa log-cocientes para medir distancias sin sesgo.}
 \termino{Enclave vs. minería diversificada}{Ambos superan el 37\% extractivo, pero el enclave tiene mínima manufactura local (1.8\% frente a 12.2\%).}
 {\small\textcolor{ccdeaccent}{\bfseries Panel con efectos fijos}}\par{\footnotesize Compara a cada región consigo misma antes y después de \ShockYear, con errores agrupados por departamento.}
 \end{keybox}
 \end{column}
 \end{columns}
-\source{Sistema de Cuentas Nacionales (INEI) y especificación metodológica del estudio.}
 \end{frame}
 
 % ---------------------------------------------------------------- 3. Estrategia empírica
 \begin{frame}[t]{Estrategia empírica: de las cuentas departamentales a la estimación de panel}
-\vspace{.02cm}
+\vspace{.08cm}
 \begin{columns}[T,onlytextwidth]
 \begin{column}{.235\textwidth}\begin{keybox}[equal height group=g4,left=2.5mm,right=2.5mm]\textcolor{ccdeaccent}{\bfseries 1. Cuentas INEI}\par\vspace{.06cm}\footnotesize \Departments\ regiones y \Sectors\ ramas (\RateStart--\RateEnd).\par\vspace{.06cm}Series oficiales sin imputación; excluye 2024--2025 por cobertura preliminar.\end{keybox}\end{column}
 \begin{column}{.235\textwidth}\begin{keybox}[equal height group=g4,left=2.5mm,right=2.5mm]\textcolor{ccdeaccent}{\bfseries 2. Escala CLR/ILR}\par\vspace{.06cm}\footnotesize Composición media \PreStart--\PreEnd.\par\vspace{.06cm}Transformación log-cociente (Aitchison) sobre participaciones que suman 100\%.\end{keybox}\end{column}
 \begin{column}{.235\textwidth}\begin{keybox}[equal height group=g4,left=2.5mm,right=2.5mm]\textcolor{ccdeaccent}{\bfseries 3. Tipología Ward}\par\vspace{.06cm}\footnotesize Reducción en dos ejes (PCA) y agrupamiento Ward.\par\vspace{.06cm}Contraste de \SpecCount\ variantes, estadístico Gap y estabilidad bootstrap.\end{keybox}\end{column}
 \begin{column}{.235\textwidth}\begin{keybox}[equal height group=g4,left=2.5mm,right=2.5mm]\textcolor{ccdeaccent}{\bfseries 4. Panel FE}\par\vspace{.06cm}\footnotesize Tasas anuales (M1--M4) e índice de nivel (M5--M6).\par\vspace{.06cm}Evalúa la divergencia post-2020 frente al perfil diversificado/agro.\end{keybox}\end{column}
 \end{columns}
-\vspace{.08cm}
+\vspace{.12cm}
 \begin{simplebox}
 \nota{Criterio de identificación} la tipología se fija en el periodo prepandemia (\PreStart--\PreEnd) para evitar que la clasificación esté afectada por el choque de 2020.
 \end{simplebox}
-\source{Implementación reproducible en Python (pandas, scikit-learn, linearmodels).}
 \end{frame}
 
 % ---------------------------------------------------------------- 4. Horizontes
@@ -72,28 +71,28 @@
 \begin{simplebox}
 \nota{Cobertura muestral} la base consolida \BaseObs\ registros (\BaseStart--\BaseEnd); el corte en \RateEnd\ preserva paneles estrictamente balanceados en los \Departments\ departamentos.
 \end{simplebox}
-\source{INEI, Cuentas Nacionales por Departamentos.}
+\source{INEI, Cuentas Nacionales por Departamentos. Elaboración propia.}
 \end{frame}
 
 % ---------------------------------------------------------------- 5. PCA
 \chartframe{Especialización extractiva y articulación sectorial definen cuatro perfiles}{fig1_pca_clusters.pdf}
 {\nota{Lectura del gráfico} los dos primeros componentes concentran el \PcaCumulative\% de la varianza CLR. El eje horizontal (PC1, \PcaOne\%) refleja el peso extractivo (+0.91); el eje vertical (PC2, \PcaTwo\%) contrapone manufactura (+0.63) frente a agricultura (-0.54).}
-{INEI. Coordenadas CLR y análisis de componentes principales (PCA) del promedio \PreStart--\PreEnd; agrupamiento Ward con $K=4$.}
+{INEI, Cuentas Nacionales por Departamentos (\PreStart--\PreEnd). Elaboración propia (coordenadas CLR, PCA y agrupamiento Ward).}
 
 % ---------------------------------------------------------------- 6. Perfiles
 \chartframe{Composición sectorial: la baja manufactura distingue al enclave minero}{fig3_perfiles_sectoriales.pdf}
 {\nota{Estructura comparada} tanto el enclave minero (41.9\%) como la minería diversificada (37.4\%) presentan alta especialización extractiva. La diferencia radica en la manufactura: 12.2\% en la minería diversificada frente a 1.8\% en los enclaves.}
-{INEI. Promedios simples departamentales (\PreStart--\PreEnd). «Otras actividades» agrupa comercio, transporte, construcción, administración pública y servicios.}
+{INEI, Cuentas Nacionales por Departamentos (\PreStart--\PreEnd). Elaboración propia.}
 
 % ---------------------------------------------------------------- 7. Validación
 \chartframe{Validación de cúmulos: K=4 maximiza la estabilidad de remuestreo}{fig2_validacion_clustering.pdf}
 {\nota{Criterios de validación} $K=2$ obtiene la mayor silueta (\SilMacro) pero solo separa a tres economías no mineras; $K=4$ alcanza una estabilidad por submuestreo de \JaccardWard\% (Jaccard). El estadístico Gap selecciona $K=\GapChoice$, reflejando transiciones graduales entre regiones.}
-{Evaluación sobre \SpecCount\ configuraciones; estadístico Gap con \GapReplicas\ réplicas de Monte Carlo; estabilidad Jaccard con \StabilityReplicas\ submuestras al \SubsamplePct\%.}
+{INEI (\PreStart--\PreEnd). Elaboración propia (\SpecCount\ configuraciones; Gap con \GapReplicas\ réplicas; Jaccard con \StabilityReplicas\ submuestras al \SubsamplePct\%).}
 
 % ---------------------------------------------------------------- 8. Volatilidad
 \chartframe{Volatilidad del crecimiento: Las Bambas 2016 explica dos tercios en enclaves}{fig4_volatilidad_estructural.pdf}
 {\nota{Efecto de observación extrema} en la muestra completa, la desviación estándar del crecimiento en enclaves (\SdEnclave\ pp) es \SdRatio\ veces la del perfil agro (\SdAgro\ pp). Al excluir en M4 el salto de Apurímac en 2016 (+\ExtremeGrowth\%, inicio de Las Bambas), la dispersión cae a 7.0 pp (1.4 veces la del agro).}
-{Panel \RateStart--\RateEnd\ (\RatesObs\ obs.). Pruebas de homogeneidad de varianzas: Levene ($p=\LeveneP$) y Fligner-Killeen ($p=\FlignerP$).}
+{INEI, panel \RateStart--\RateEnd\ (\RatesObs\ obs.). Elaboración propia (pruebas de Levene $p=\LeveneP$ y Fligner-Killeen $p=\FlignerP$).}
 
 % ---------------------------------------------------------------- 9. Tasas vs niveles
 \begin{frame}[t]{Tasas anuales frente a niveles: el rebote no compensó la caída de 2020}
@@ -127,22 +126,22 @@ Tasas de variación positivas después del choque son compatibles con una pérdi
 \end{simplebox}
 \end{column}
 \end{columns}
-\source{Modelos PanelOLS con efectos fijos departamentales y errores estándar agrupados por departamento.}
+\source{INEI. Elaboración propia a partir de modelos de panel con efectos fijos departamentales y errores agrupados.}
 \end{frame}
 
 % ---------------------------------------------------------------- 10. Trayectoria
 \chartframe{Evolución del VAB real (2019 = 100): rezago en los enclaves hasta 2023}{fig5_trayectoria_vab_indexado.pdf}
 {\nota{Trayectoria post-choque} el índice medio de los enclaves se ubicó en \EnclaveFirst\ (2021), retrocedió a \EnclaveSecond\ (2022, año de paralizaciones en el Corredor Minero del Sur) y cerró en \EnclaveThird\ (2023). Los otros tres perfiles superaron el umbral de 100 desde 2021--2022.}
-{INEI. Promedio simple del índice departamental (base 2019 = 100) dentro de cada perfil productivo.}
+{INEI, Cuentas Nacionales por Departamentos. Elaboración propia (promedio simple del índice $2019=100$ por perfil).}
 
 % ---------------------------------------------------------------- 11. Forest
 \chartframe{Estimaciones de panel: brecha nula en tasas y rezago de \ScarBeta\ en nivel}{fig6_forest_plot_modelos.pdf}
 {\nota{Lectura de intervalos} cada marcador representa la diferencia estimada frente al perfil diversificado/agro y las barras horizontales el intervalo de confianza al \ConfidencePct\%. En tasas anuales (panel A) todos los intervalos cruzan el cero; en niveles (panel B), el enclave registra un rezago significativo en 2021--2023.}
-{PanelOLS con efectos fijos departamentales y errores agrupados por departamento. Escalas horizontales específicas por variable dependiente.}
+{INEI. Elaboración propia (estimaciones con efectos fijos departamentales y errores agrupados por departamento).}
 
 % ---------------------------------------------------------------- 12. Interpretación
 \begin{frame}[t]{Alcance del estimador: diferencial relativo de nivel y sensibilidad continua}
-\vspace{.08cm}
+\vspace{.10cm}
 \begin{columns}[T,onlytextwidth]
 \begin{column}{.38\textwidth}
 \begin{keybox}[equal height group=g13]
@@ -163,20 +162,20 @@ Enclaves vs. perfil agro (\PostStart--\PostEnd\ frente a \LevelStart--\PreEnd).
 \end{keybox}
 \end{column}
 \end{columns}
-\source{Modelos M5 y M6 (\LevelsObs\ observaciones, \Departments\ departamentos).}
 \end{frame}
 
 % ---------------------------------------------------------------- 13. Límites
 \begin{frame}[t]{Limitaciones del análisis: tamaño muestral, choques simultáneos y sensibilidad}
+\vspace{.06cm}
 \begin{keybox}
 \textbf{1. Tamaño muestral del enclave ($N=\EnclaveCount$).} Incluye Apurímac, Pasco y Huancavelica; esta última ingresa por su baja manufactura (1.7\%), pese a tener minería moderada (13.4\%).\par\smallskip
 \textbf{2. Simultaneidad de choques.} El periodo \PostStart--\PostEnd\ coincide con bloqueos en el Corredor Minero y menor ley en tajos maduros de Pasco, factores no separables con series anuales hasta \LevelEnd.\par\smallskip
 \textbf{3. Sensibilidad dimensional.} Con 3 ejes PCA la concordancia baja (ARI = 0.57); con coordenadas ILR completas se mantiene alta (ARI = 0.87).
 \end{keybox}
+\vspace{.08cm}
 \begin{simplebox}
 \nota{Alcance empírico} documenta una divergencia robusta en el nivel recuperado, pero requiere datos de mayor frecuencia para identificar causas.
 \end{simplebox}
-\source{Sección de discusión y análisis de sensibilidad del documento de trabajo CCDE.}
 \end{frame}
 
 % ---------------------------------------------------------------- 14. Conclusiones
@@ -184,24 +183,23 @@ Enclaves vs. perfil agro (\PostStart--\PostEnd\ frente a \LevelStart--\PreEnd).
 \begin{columns}[T,onlytextwidth]
 \begin{column}{.485\textwidth}
 \begin{keybox}[equal height group=g15,top=1.5mm,bottom=1.5mm]
-\termino{1. La diversificación amortigua choques}{La industria y servicios locales sostienen la región cuando la mina se frena: en 2023 la minería diversificada superó a 2019 (\MiningFinal) y los enclaves quedaron rezagados (\EnclaveFinal).}
-\termino{2. Crecer tras caer no es recuperarse}{Las tasas positivas de 2021--2023 son un rebote sobre una base deprimida; en volumen ($2019=100$), los enclaves mantienen una brecha de \textbf{\ScarBeta\ puntos} frente al agro ($p=\ScarP$).}
+\termino{1. La diversificación amortigua choques}{La industria y servicios locales sostienen la región cuando la extracción se frena: en 2023 la minería diversificada superó a 2019 (\MiningFinal) y los enclaves quedaron rezagados (\EnclaveFinal).}
+\termino{2. Crecer tras caer no es recuperarse}{Las tasas positivas de 2021--2023 son un rebote sobre una base reducida; en volumen ($2019=100$), los enclaves mantienen una brecha de \textbf{\ScarBeta\ puntos} frente al agro ($p=\ScarP$).}
 \end{keybox}
 \end{column}
 \begin{column}{.485\textwidth}
 \begin{keybox}[equal height group=g15,top=1.5mm,bottom=1.5mm]
-\termino{3. Fragilidad ante un único proyecto}{Sin tejido secundario (1.8\% manufactura), un solo hito o conflicto mueve la región: Las Bambas 2016 explica dos tercios de la volatilidad (\SdEnclave\ a 7.0 pp) y los paros de 2022 frenaron el nivel.}
-\termino{4. Monitoreo y articulación productiva}{Mirar solo tasas anuales da por recuperadas a regiones que aún producen menos que en 2019; el monitoreo y el canon deben priorizar encadenamientos locales.}
+\termino{3. Exposición a un único proyecto}{Sin tejido industrial local (1.8\% manufactura), un solo hito o conflicto mueve la región: Las Bambas 2016 explica dos tercios de la volatilidad (\SdEnclave\ a 7.0 pp) y los paros de 2022 frenaron el nivel.}
+\termino{4. Medir niveles y agenda futura}{Evaluar solo el crecimiento anual da por recuperadas a regiones que aún producen menos que en 2019; el monitoreo debe seguir el nivel de actividad y futuras investigaciones evaluar los canales locales.}
 \end{keybox}
 \end{column}
 \end{columns}
-\source{Síntesis elaborada por el CCDE a partir de la evidencia descriptiva y econométrica del estudio.}
 \end{frame}
 
 % ================================================================ ANEXOS
 \appendix
 \begin{frame}[t]{Anexo · Especificación técnica de los ajustes metodológicos}
-\vspace{.05cm}
+\vspace{.08cm}
 {\footnotesize
 \begin{columns}[T,onlytextwidth]
 \begin{column}{.48\textwidth}
@@ -221,12 +219,11 @@ Enclaves vs. perfil agro (\PostStart--\PostEnd\ frente a \LevelStart--\PreEnd).
 \end{column}
 \end{columns}
 }
-\source{Documentación metodológica completa en el artículo CCDE y parámetros en config/analisis.toml.}
 \end{frame}
 
 \chartframe{Anexo · Agrupamiento jerárquico Ward: corte K=2 frente a K=4}{fig3b_jerarquia_ward.pdf}
 {El dendrograma ilustra las distancias de fusión en el espacio CLR + PCA2. Un corte en $K=2$ (\WardSmallCount\ y \WardLargeCount\ regiones) aísla únicamente al perfil diversificado/agro; el corte en $K=4$ permite distinguir entre minería diversificada y enclaves.}
-{Método de Ward sobre coordenadas CLR + PCA2. Umbrales de corte determinados por las distancias de fusión.}
+{INEI (\PreStart--\PreEnd). Elaboración propia mediante el método de Ward sobre coordenadas CLR + PCA2.}
 
 \begin{frame}[t]{Anexo · Estimaciones de panel: tasas anuales (M1, M4) y niveles (M5, M6)}
 \vspace{.10cm}\centering
@@ -251,17 +248,15 @@ $R^2$ within & 0.145 & 0.277 & 0.355 & 0.345 \\
 }
 \par\vspace{.12cm}\RaggedRight\footnotesize
 Errores estándar agrupados por departamento entre paréntesis. Categoría base: perfil Diversificado/Agro. Las especificaciones adicionales M2 (macrogrupos) y M3 (minería continua en tasas) se reportan en el documento de trabajo.
-\source{Estimaciones PanelOLS del pipeline CCDE. * $p<0.10$, ** $p<0.05$, *** $p<0.01$.}
+\source{INEI. Elaboración propia (estimaciones de panel con efectos fijos). * $p<0.10$, ** $p<0.05$, *** $p<0.01$.}
 \end{frame}
 
 \begin{frame}[t]{Anexo · Fuentes oficiales, referencias bibliográficas y reproducibilidad}
+\vspace{.06cm}
 \small
-\textbf{Fuente primaria:} Instituto Nacional de Estadística e Informática (INEI), Cuentas Nacionales por Departamentos, VAB a precios constantes de 2007.\par\medskip
-\textbf{Referencias metodológicas:} Aitchison (1986), análisis de datos composicionales; Martín-Fernández et al. (2003), tratamiento multiplicativo de ceros; Egozcue et al. (2003), coordenadas ILR; Tibshirani et al. (2001), estadístico Gap; Hennig (2007), estabilidad por remuestreo.\par\medskip
-\normalsize\textbf{Reproducción íntegra del estudio}\par\smallskip
-\texttt{python src/generar\_analisis\_completo.py}\par
-\texttt{python src/compilar.py}\par\medskip
-\footnotesize\url{https://github.com/CCDE-DataLab/clusters-departamentales}
-\source{Referencias completas en articulo/main.tex y parámetros en config/analisis.toml.}
+\textbf{Fuente primaria:} Instituto Nacional de Estadística e Informática (INEI), Cuentas Nacionales por Departamentos, VAB a precios constantes de 2007 (serie \RateStart--\RateEnd).\par\medskip
+\textbf{Referencias metodológicas:} Aitchison (1986), análisis de datos composicionales; Martín-Fernández et al. (2003), tratamiento multiplicativo de ceros; Egozcue et al. (2003), coordenadas ILR; Tibshirani et al. (2001), estadístico Gap; Hennig (2007), estabilidad por remuestreo.\par\bigskip
+\textbf{Repositorio de datos y código de reproducción}\par\smallskip
+\url{https://github.com/CCDE-DataLab/clusters-departamentales}
 \end{frame}
 \end{document}
