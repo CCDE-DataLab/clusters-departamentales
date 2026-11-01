@@ -5,12 +5,10 @@ Investigación del **Círculo de Ciencia de Datos y Econometría (CCDE)** sobre 
 ## Entregables
 
 - `articulo/main.tex` y `articulo/main.pdf`: documento de trabajo con metodología, resultados, discusión, referencias y anexos.
-- `presentacion/presentacion-clusters-departamentales.tex`, `.pdf` y `.pptx`: presentación final con la portada institucional original.
+- `presentacion/presentacion-clusters-departamentales.tex` y `.pdf`: presentación final en Beamer/LaTeX con la portada institucional original.
 - `figures/`: siete figuras compartidas, en PDF vectorial y PNG.
 - `src/modelo-clusters.ipynb` y `src/modelo-econometrico.ipynb`: cuadernos ejecutados que consultan las mismas salidas.
 - `docs/revision-final.md`: revisión visual y correcciones metodológicas.
-
-PowerPoint reproduce las páginas finales del PDF mediante imágenes y conserva texto en notas y descripciones. **El contenido y la composición se editan en LaTeX**; los elementos de PowerPoint no son objetos editables individuales.
 
 ## Alcance y resultados
 
@@ -51,7 +49,7 @@ python src/inspeccionar.py presentacion/presentacion-clusters-departamentales.pd
 python src/inspeccionar.py articulo/main.pdf --salida .qa/articulo
 ```
 
-Se generan páginas y hojas de contacto para inspección humana. La compilación rechaza referencias indefinidas, glifos ausentes y desbordamientos. La auditoría comprueba fuentes, crecimiento, cierre composicional, isometría CLR/ILR, muestras, intervalos, referencias y concordancia PDF/PowerPoint. Estas comprobaciones complementan la revisión visual.
+Se generan páginas y hojas de contacto para inspección humana. La compilación rechaza referencias indefinidas, glifos ausentes y desbordamientos. La auditoría comprueba fuentes, crecimiento, cierre composicional, isometría CLR/ILR, muestras, intervalos, referencias y formato PDF. Estas comprobaciones complementan la revisión visual.
 
 ## Organización
 
@@ -59,10 +57,10 @@ Se generan páginas y hojas de contacto para inspección humana. La compilación
 assets/                 Estilo Beamer y logotipo positivo CCDE
 articulo/               Fuente LaTeX modular y PDF del artículo
 config/analisis.toml    Supuestos y ventanas
- data/raw/              24 libros INEI originales conservados en Git
- data/processed/        Base original y salidas finales
+data/raw/               24 libros INEI originales conservados en Git
+data/processed/         Base original y salidas finales
 figures/                Única copia de figuras compartidas
-presentacion/           Beamer, PDF y PowerPoint
+presentacion/           Fuente Beamer (.tex) y presentación PDF
 resultados/             Cifras y tablas LaTeX generadas
 src/                    ETL, análisis, gráficos y verificaciones
 ```

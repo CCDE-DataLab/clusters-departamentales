@@ -20,10 +20,14 @@
 \setbeamertemplate{frametitle}{\vspace{.20cm}\insertframetitle\par\vspace{.12cm}}
 \newcommand{\ccdefootlabel}{CCDE | Estructura productiva y recuperación regional}
 \setbeamertemplate{footline}{\hspace{.65cm}\raisebox{.18cm}{\scriptsize\color{ccdeaccent}\ccdefootlabel}\hfill\raisebox{.18cm}{\scriptsize\color{ccdenavy}\insertframenumber\hspace{.65cm}}}
-\newcommand{\source}[1]{\vfill{\fontsize{6.5}{8}\selectfont\color{ccdeaccent}Fuente: #1\par}\vspace{.08cm}}
-\newtcolorbox{keybox}[1][]{colback=ccdeice,colframe=ccdeice,boxrule=0pt,arc=1mm,fontupper=\RaggedRight,left=3mm,right=3mm,top=2mm,bottom=2mm,#1}
-\newcommand{\chartframe}[4]{\begin{frame}[t]{#1}\centering\includegraphics[width=\textwidth,height=5.45cm,keepaspectratio]{#2}\par\vspace{.10cm}\begin{minipage}{\textwidth}\small\RaggedRight #3\end{minipage}\source{#4}\end{frame}}
-\newcommand{\metric}[3]{\begin{keybox}\textcolor{#3}{\fontsize{29}{32}\selectfont\bfseries #1}\par\vspace{.12cm}\normalsize #2\end{keybox}}
+\newcommand{\source}[1]{\vfill{\RaggedRight\fontsize{6.5}{8}\selectfont\color{ccdeaccent}Fuente: #1\par}\vspace{.08cm}}
+\newtcolorbox{keybox}[1][]{colback=ccdeice,colframe=ccdeice,boxrule=0pt,arc=1mm,fontupper=\raggedright,left=3mm,right=3mm,top=2mm,bottom=2mm,#1}
+\newcommand{\chartframe}[4]{\begin{frame}[t]{#1}\begin{center}\includegraphics[width=\textwidth,height=4.75cm,keepaspectratio]{#2}\end{center}\vspace{-.12cm}\begin{minipage}{\textwidth}\small\raggedright #3\end{minipage}\source{#4}\end{frame}}
+\newcommand{\metric}[3]{\begin{keybox}\textcolor{#3}{\fontsize{28}{31}\selectfont\bfseries #1}\par\vspace{.10cm}\small #2\end{keybox}}
+% Recursos de síntesis ejecutiva y notas metodológicas con la paleta CCDE.
+\newtcolorbox{simplebox}[1][]{enhanced,colback=white,colframe=ccdeice,boxrule=.6pt,borderline west={3pt}{0pt}{ccdeaccent},arc=1mm,fontupper=\raggedright\small,left=3mm,right=3mm,top=1.5mm,bottom=1.5mm,#1}
+\newcommand{\nota}[1]{\textcolor{ccdeaccent}{\bfseries #1:}\ }
+\newcommand{\termino}[2]{{\small\textcolor{ccdeaccent}{\bfseries #1}}\par{\footnotesize #2}\par\vspace{.03cm}}
 
 % Portada institucional original conservada por solicitud del usuario.
 \definecolor{ccdeblue}{RGB}{34,53,94}
@@ -56,10 +60,12 @@
 }
 \end{column}
 \begin{column}{0.74\textwidth}
-{\LARGE\bfseries\textcolor{ccdenavy}{#1}\par}
-\vspace{0.22cm}
-{\large\textcolor{ccdeblue}{#2}\par}
-\vspace{0.38cm}
+{\raggedright\LARGE\bfseries\textcolor{ccdenavy}{#1}\par}
+\vspace{0.18cm}
+{\raggedright\normalsize\textcolor{ccdeblue}{#2}\par}
+\vspace{0.20cm}
+{\raggedright\footnotesize\textcolor{ccdeaccent!85!ccdenavy}{Datos Composicionales (CLR/ILR) $\cdot$ Agrupamiento Ward $\cdot$ Panel con Efectos Fijos}\par}
+\vspace{0.24cm}
 {\normalsize\bfseries\textcolor{ccdeaccent}{Círculo de Ciencia de Datos y Econometría}}
 \end{column}
 \end{columns}

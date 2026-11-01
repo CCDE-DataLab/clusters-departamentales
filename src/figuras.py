@@ -44,7 +44,7 @@ def pca(study):
     ax.axhline(0, color="#94A3B8", lw=.7, ls=":")
     ax.axvline(0, color="#94A3B8", lw=.7, ls=":")
     explained = study.pca.explained_variance_ratio_ * 100
-    ax.set(xlabel=f"PC1 · {explained[0]:.1f}% de la varianza CLR", ylabel=f"PC2 · {explained[1]:.1f}% de la varianza CLR")
+    ax.set(xlabel=f"PC1 · especialización extractiva ({explained[0]:.1f}% var. CLR)", ylabel=f"PC2 · manufactura vs. agro ({explained[1]:.1f}% var. CLR)")
     ax.legend(loc="upper center", bbox_to_anchor=(.5, 1.18), ncol=2, frameon=False, fontsize=14)
     ax.grid(alpha=.5)
     fig.canvas.draw()
@@ -99,7 +99,7 @@ def perfiles(study):
                 label = ax.text(left[i] + value / 2, i, f"{value:.1f}%", ha="center", va="center", color=NAVY if col == "resto" else "white", weight="bold", fontsize=17)
                 segment_labels.append((label, value))
         left += v
-    ax.set(yticks=range(len(profile)), yticklabels=[f"{SHORT[n]}  (n={int(study.etiquetas.Nombre_Cluster_K4.eq(n).sum())})" for n in profile.index], xlim=(0, 100), xlabel="Participación media en el VAB departamental (%)")
+    ax.set(yticks=range(len(profile)), yticklabels=[f"{SHORT[n]}  (n={int(study.etiquetas.Nombre_Cluster_K4.eq(n).sum())})" for n in profile.index], xlim=(0, 100), xlabel="Participación media en la producción departamental (VAB real, %)")
     ax.invert_yaxis()
     ax.grid(axis="x")
     ax.legend(loc="upper center", bbox_to_anchor=(.5, -.16), ncol=2, frameon=False, fontsize=14)
@@ -142,7 +142,7 @@ def volatilidad(study):
     extreme = study.tasas.loc[study.tasas.crecimiento_vab.idxmax()]
     ax.annotate(f"{extreme.departamento} {int(extreme.anio)}\n{extreme.crecimiento_vab:+.1f}%", xy=(extreme.crecimiento_vab, ORDER.index(extreme.Nombre_Cluster_K4)), xytext=(-4, -55), textcoords="offset points", ha="center", fontsize=16, color=COLORS[extreme.Nombre_Cluster_K4], arrowprops={"arrowstyle": "->", "color": "#CA5D36"})
     lo, hi = study.tasas.crecimiento_vab.min(), study.tasas.crecimiento_vab.max()
-    ax.set(xlim=(min(lo, 0) - .06 * (hi-lo), hi + .15 * (hi-lo)), yticks=range(len(ORDER)), yticklabels=[SHORT[n] for n in ORDER], xlabel="Crecimiento anual del VAB real (%)", title="Todas las observaciones · eje lineal")
+    ax.set(xlim=(min(lo, 0) - .06 * (hi-lo), hi + .15 * (hi-lo)), yticks=range(len(ORDER)), yticklabels=[SHORT[n] for n in ORDER], xlabel="Crecimiento anual del VAB real departamental (%)", title="Todas las observaciones · eje lineal")
     vol = study.volatilidad
     for i, name in enumerate(ORDER):
         full, reduced = vol.loc[name, ["std", "std_sin_exclusion"]]
@@ -175,7 +175,7 @@ def trayectoria(study):
     ax.text(m["choque"], trajectory.min().min() - 1.8, str(m["choque"]), ha="center", fontsize=14, color="#CA5D36")
     values = trajectory.to_numpy()
     span = values.max() - values.min()
-    ax.set(xlim=(trajectory.index.min()-.2, trajectory.index.max()+3.1), ylim=(values.min()-.15*span, max(values.max(), max(label_y))+.12*span), xticks=trajectory.index, ylabel=f"Índice de VAB real · {m['base']} = 100", xlabel="Año")
+    ax.set(xlim=(trajectory.index.min()-.2, trajectory.index.max()+3.1), ylim=(values.min()-.15*span, max(values.max(), max(label_y))+.12*span), xticks=trajectory.index, ylabel=f"VAB real departamental (índice {m['base']} = 100)", xlabel="Año")
     ax.grid(axis="y")
     guardar(fig, "fig5_trayectoria_vab_indexado", study)
 
@@ -186,14 +186,14 @@ def forest(study):
     periods = {"COVID": str(sample["choque"]), "POST_21_23": f"{sample['post_inicio']}–{sample['post_fin']}"}
     profile_labels = {ORDER[1]: "Servicios / manufactura", ORDER[2]: "Minero diversificado", ORDER[3]: "Enclave minero"}
     parameters = [(f"{period}:Nombre_Cluster_K4[T.{name}]", f"{periods[period]} · {profile_labels[name]}", name) for period in periods for name in ORDER[:0:-1]]
-    fig = plt.figure(figsize=(12.5, 6.5), layout="constrained")
-    grid = fig.add_gridspec(2, 2, height_ratios=[1, .22], hspace=.05, wspace=.08)
+    fig = plt.figure(figsize=(13.2, 6.5), layout="constrained")
+    grid = fig.add_gridspec(2, 2, height_ratios=[1, .22], hspace=.05, wspace=.12)
     axes = [fig.add_subplot(grid[0, 0])]
     axes.append(fig.add_subplot(grid[0, 1], sharey=axes[0]))
     legend_axes = [fig.add_subplot(grid[1, column]) for column in range(2)]
     for axis in legend_axes:
         axis.set_axis_off()
-    for axis, codes, title, unit in [(axes[0], ["M1", "M4"], "A. Tasas anuales (M1 y M4)", "Diferencial de crecimiento (pp)"), (axes[1], ["M5"], "B. Niveles indexados (M5)", "Diferencial del índice (puntos)")]:
+    for axis, codes, title, unit in [(axes[0], ["M1", "M4"], "A. Crecimiento anual (M1 y M4)", "Diferencial vs. agro (pp)"), (axes[1], ["M5"], "B. Nivel de VAB, 2019 = 100 (M5)", "Diferencial vs. agro (puntos)")]:
         bounds = [0.]
         for code in codes:
             model = study.modelos[code]

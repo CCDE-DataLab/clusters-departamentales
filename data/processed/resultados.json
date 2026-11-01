@@ -122,15 +122,15 @@
     "adjustText": "1.4.0"
   },
   "sha256_salidas": {
-    "composiciones_pre.xlsx": "825e6cda67fd453f024a2ff234eb024a5e9c68b95f8845dea50a5f73f3fd8c5a",
-    "coordenadas_clr.xlsx": "c2f05760e0b31660ce103f1286b329cfe85d13684b47e70f6b806ddbef22d6ff",
-    "coordenadas_ilr.xlsx": "4aef4d6ff8ce39ad0e4b0aca438ca5c75041ee7eb33bb9baf5eadb5bcc2a8ff4",
-    "etiquetas_clusters.xlsx": "ac18bd5d8103c58bb305a13edf543aa47f27b6af0e6aea6a316a8b6dd45478ff",
-    "metricas_clustering.xlsx": "199cebc09abd29452ae608a023a0e4de3f7cb667ea280e084781715643562b04",
-    "validacion_clustering.xlsx": "938f7fd567625d729a2c33f0beb1977dd29323400d3a26804b7d4e40f7d193ad",
-    "sensibilidad_clustering.xlsx": "3783935a5c599adf625a743cd2c842b9fa90b257ce4fa37a20eaf73e3b78c8b2",
-    "panel_econometrico_final.xlsx": "fbab22d8a9e84bb786ebfbddb9abeffdefcded483f9295a023b6f0dd7fc6bf60",
-    "resumen_modelos_econometricos.xlsx": "3af481055698f8e74a5c5b9201d90b81d25b47c06e9e0f75612f3841a88c258e",
-    "volatilidad.xlsx": "ff72a2f1a9780bb4e8b435b038a2ecbb0eae06f49594cd812e030300113e6b35"
+    "composiciones_pre.xlsx": "ee89df3446e17e9e58f69a869a30b51d64d2b457a70b5ae496166b55ba6bfb40",
+    "coordenadas_clr.xlsx": "e7fd76de8674db3ffef7d22c9abeb37e2ab888e17ccf1e515ee83d14b4d6f5f7",
+    "coordenadas_ilr.xlsx": "8bf40f27b185e0a84c6d47e13c3e7a1e5aa0df43737699d4223044071fc140ca",
+    "etiquetas_clusters.xlsx": "4556ba89f6ce969b8dfbb07ed7ec59fc7b880a931a31327d797899720397bf7b",
+    "metricas_clustering.xlsx": "f44c667c7b8a1574cb1b8d952746fba6624c1c96ccdf55462372cfe360e5a5df",
+    "validacion_clustering.xlsx": "7781c6e38f746970604e6bb65c189082fecc674f1581d73fdc202c3851eda529",
+    "sensibilidad_clustering.xlsx": "2d36168839b8c4d21b72adce0eb342d9e440ce7aa4fd5d571706d564a4e5c2ef",
+    "panel_econometrico_final.xlsx": "ab5dc44f4e24c408617ee75cab95750fa9fdb9b89d860fb03da315226ee10777",
+    "resumen_modelos_econometricos.xlsx": "82cbf49ad8037ce24b0783e547f33ea01b73cf0c77ac5ed3225dc86216221dda",
+    "volatilidad.xlsx": "218bbd0613f522c4dc7665e3f164a34c2375e6ab42dd9efe9abd58c84935c499"
   }
 }
