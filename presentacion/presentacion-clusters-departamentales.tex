@@ -10,69 +10,81 @@
 
 % ---------------------------------------------------------------- 1. Síntesis ejecutiva
 \begin{frame}[t]{Recuperación regional asimétrica: los enclaves siguen bajo su nivel de 2019}
-\vspace{.10cm}
+\vspace{.03cm}
 \begin{columns}[T,onlytextwidth]
-\begin{column}{.31\textwidth}\begin{keybox}[equal height group=g2]\textcolor{warn}{\fontsize{28}{31}\selectfont\bfseries \EnclaveFinal}\par\vspace{.10cm}\small VAB real 2023 en enclaves mineros (base 2019 = 100)\end{keybox}\end{column}
-\begin{column}{.31\textwidth}\begin{keybox}[equal height group=g2]\textcolor{purplex}{\fontsize{28}{31}\selectfont\bfseries \MiningFinal}\par\vspace{.10cm}\small VAB real 2023 en minería diversificada (2019 = 100)\end{keybox}\end{column}
-\begin{column}{.31\textwidth}\begin{keybox}[equal height group=g2]\textcolor{warn}{\fontsize{28}{31}\selectfont\bfseries \ScarBeta}\par\vspace{.10cm}\small Diferencial de nivel frente a diversificado/agro (2021--2023)\end{keybox}\end{column}
+\begin{column}{.31\textwidth}\begin{keybox}[equal height group=g2,top=1.3mm,bottom=1.3mm]\textcolor{warn}{\fontsize{28}{31}\selectfont\bfseries \EnclaveFinal}\par\vspace{.06cm}\small VAB real 2023 en enclaves mineros (base 2019 = 100)\end{keybox}\end{column}
+\begin{column}{.31\textwidth}\begin{keybox}[equal height group=g2,top=1.3mm,bottom=1.3mm]\textcolor{purplex}{\fontsize{28}{31}\selectfont\bfseries \MiningFinal}\par\vspace{.06cm}\small VAB real 2023 en minería diversificada (2019 = 100)\end{keybox}\end{column}
+\begin{column}{.31\textwidth}\begin{keybox}[equal height group=g2,top=1.3mm,bottom=1.3mm]\textcolor{warn}{\fontsize{28}{31}\selectfont\bfseries \ScarBeta}\par\vspace{.06cm}\small Diferencial de nivel frente a diversificado/agro (2021--2023)\end{keybox}\end{column}
 \end{columns}
-\vspace{.14cm}
+\vspace{.06cm}
 \begin{simplebox}
-\nota{Pregunta empírica} ¿Cómo se relaciona la estructura productiva prepandemia con la volatilidad del crecimiento y el nivel de actividad recuperado tras 2020?\par\vspace{.05cm}
-\nota{Hallazgo principal} con base $2019 = 100$, en 2023 los perfiles diversificado/agro (\AgroFinal), servicios (\ServicesFinal) y minero diversificado (\MiningFinal) superaron su nivel prepandemia; los enclaves (Apurímac, Huancavelica y Pasco) promediaron \EnclaveFinal.
+\nota{Pregunta y tipología propia} ¿Cómo se relaciona la estructura productiva previa con la recuperación post-2020? Con las \Sectors\ ramas del INEI se construyen \textbf{4 perfiles propios} (Ward sobre CLR+PCA, \PreStart--\PreEnd).\par\vspace{.02cm}
+\nota{Hallazgo principal} en 2023 ($2019=100$), diversificado/agro (\AgroFinal), servicios/manufactura (\ServicesFinal) y minería diversificada (\MiningFinal) superaron a 2019; los enclaves (Apurímac, Huancavelica y Pasco) promediaron \EnclaveFinal.
 \end{simplebox}
-\source{INEI, Cuentas Nacionales por Departamentos (precios constantes de 2007). Elaboración propia (CCDE).}
+\source{INEI, Cuentas Nacionales por Departamentos (precios constantes de 2007). Elaboración y tipología propia (CCDE).}
 \end{frame}
 
-% ---------------------------------------------------------------- 2. Marco conceptual
-\begin{frame}[t]{Medición de la recuperación y clasificación composicional de los perfiles}
-\vspace{.08cm}
+% ---------------------------------------------------------------- 2. Datos, medición y problema composicional
+\begin{frame}[t]{Medición de la actividad (INEI) y geometría composicional (CLR/ILR)}
+\vspace{.06cm}
 \begin{columns}[T,onlytextwidth]
 \begin{column}{.485\textwidth}
-\begin{keybox}[equal height group=g3,top=1.8mm,bottom=1.8mm]
-\termino{Valor Agregado Bruto (VAB real)}{Medida oficial del INEI a precios constantes de 2007; componente del PBI antes de impuestos netos sobre los productos.}
-\termino{Índice de volumen (2019 = 100)}{Compara el VAB real de cada región con su nivel de 2019; \EnclaveFinal\ indica un volumen 2.4\% menor al prepandemia.}
-{\small\textcolor{ccdeaccent}{\bfseries Tasa anual vs. nivel acumulado}}\par{\footnotesize La tasa mide la variación porcentual anual; el índice evalúa si se recuperó el nivel previo al choque.}
+\begin{keybox}[equal height group=g3,top=1.5mm,bottom=1.5mm]
+\termino{Valor Agregado Bruto (VAB real)}{Medida del INEI a precios constantes de 2007 en \Departments\ regiones y \Sectors\ ramas (componente del PBI antes de impuestos netos).}
+\termino{Índice de volumen ($I_{it}$, 2019 = 100)}{Compara el VAB real de cada región con su nivel de 2019; \EnclaveFinal\ indica un volumen 2.4\% menor al prepandemia.}
+{\small\textcolor{ccdeaccent}{\bfseries Tasa anual ($g_{it}$) vs. nivel acumulado ($I_{it}$)}}\par{\footnotesize La tasa mide el cambio porcentual anual; el índice evalúa si se recuperó el volumen previo al choque.}
 \end{keybox}
 \end{column}
 \begin{column}{.485\textwidth}
-\begin{keybox}[equal height group=g3,top=1.8mm,bottom=1.8mm]
-\termino{Estructura productiva (CLR/ILR)}{Participación media de \Sectors\ ramas; al sumar 100\%, usa log-cocientes para respetar la geometría composicional.}
-\termino{Enclave vs. minería diversificada}{Ambos superan el 37\% extractivo, pero el enclave tiene mínima manufactura local (1.8\% frente a 12.2\%).}
-{\small\textcolor{ccdeaccent}{\bfseries Panel con efectos fijos}}\par{\footnotesize Compara cambios relativos dentro de cada región antes y después de \ShockYear, con errores agrupados por departamento.}
+\begin{keybox}[equal height group=g3,top=1.5mm,bottom=1.5mm]
+\termino{¿Por qué usar coordenadas CLR / ILR?}{Las \Sectors\ ramas suman 100\% (símplex): aumentar una participación obliga a reducir otra y sesga la distancia euclidiana directa.}
+\termino{Transformación de Aitchison}{$\operatorname{clr}(x_{ij})=\ln x_{ij}-\overline{\ln x_i}$ centra cada rama respecto a la media geométrica regional (\PreStart--\PreEnd, \Zeros\ ceros) y la proyecta a $\mathbb{R}^D$.}
+{\small\textcolor{ccdeaccent}{\bfseries Equivalencia isométrica (ILR)}}\par{\footnotesize Con base de Helmert en $\mathbb{R}^{10}$, la distancia euclidiana en CLR/ILR coincide con la distancia de Aitchison.}
 \end{keybox}
 \end{column}
 \end{columns}
 \end{frame}
 
-% ---------------------------------------------------------------- 3. Estrategia empírica
-\begin{frame}[t]{Estrategia empírica: de la composición prepandemia al contraste en panel}
-\vspace{.08cm}
+% ---------------------------------------------------------------- 3. Metodología de clustering y perfiles
+\begin{frame}[t]{Construcción de la tipología propia: de CLR y PCA a los cuatro perfiles Ward}
+\vspace{.06cm}
 \begin{columns}[T,onlytextwidth]
-\begin{column}{.235\textwidth}\begin{keybox}[equal height group=g4,left=2.5mm,right=2.5mm]\textcolor{ccdeaccent}{\bfseries 1. Cuentas INEI}\par\vspace{.06cm}\footnotesize \Departments\ regiones y \Sectors\ ramas (\RateStart--\RateEnd).\par\vspace{.06cm}Series oficiales sin imputación; excluye 2024--2025 por cobertura incompleta.\end{keybox}\end{column}
-\begin{column}{.235\textwidth}\begin{keybox}[equal height group=g4,left=2.5mm,right=2.5mm]\textcolor{ccdeaccent}{\bfseries 2. Escala CLR/ILR}\par\vspace{.06cm}\footnotesize Composición media \PreStart--\PreEnd.\par\vspace{.06cm}Log-cocientes (Aitchison) sobre participaciones que suman 100\%.\end{keybox}\end{column}
-\begin{column}{.235\textwidth}\begin{keybox}[equal height group=g4,left=2.5mm,right=2.5mm]\textcolor{ccdeaccent}{\bfseries 3. Tipología Ward}\par\vspace{.06cm}\footnotesize Reducción en dos ejes (PCA) y agrupamiento Ward.\par\vspace{.06cm}Contraste de \SpecCount\ variantes, estadístico Gap y submuestreo Jaccard.\end{keybox}\end{column}
-\begin{column}{.235\textwidth}\begin{keybox}[equal height group=g4,left=2.5mm,right=2.5mm]\textcolor{ccdeaccent}{\bfseries 4. Panel FE}\par\vspace{.06cm}\footnotesize Tasas anuales (M1--M4) e índice de nivel (M5--M6).\par\vspace{.06cm}Evalúa cambios relativos post-2020 frente al perfil diversificado/agro.\end{keybox}\end{column}
+\begin{column}{.46\textwidth}
+\begin{keybox}[equal height group=g4,top=1.6mm,bottom=1.6mm]
+\textbf{Algoritmo y espacio de agrupamiento}\par\vspace{.05cm}
+\footnotesize
+\textbf{1. Reducción PCA:} sobre CLR centrado sin estandarizar; 2 ejes retienen \textbf{\PcaCumulative\%} de la varianza (PC1 \PcaOne\% extractivo; PC2 \PcaTwo\% manufactura vs. agro).\par\vspace{.05cm}
+\textbf{2. Cúmulos jerárquicos de Ward:} minimiza la varianza intragrupo ($\Delta\text{WCSS}$) en cada fusión; coincide al 100\% con K-Means en $K=4$ sobre PCA2.\par\vspace{.05cm}
+\textbf{3. Contraste de \SpecCount\ variantes:} 4 métodos (Ward, K-Means, PAM, GMM) $\times$ 3 espacios (PCA2, PCA3, ILR) $\times$ $K\in\{2..5\}$, validados con Silueta, Gap y Jaccard sin reemplazo.
+\end{keybox}
+\end{column}
+\begin{column}{.51\textwidth}
+\begin{keybox}[equal height group=g4,top=1.6mm,bottom=1.6mm]
+\textbf{Los 4 perfiles generados ($K=4$, ordenados por minería)}\par\vspace{.05cm}
+\scriptsize
+\textbf{1. Diversificado/Agro ($n=\AgroCount$):} 0.9\% minería, 12.7\% manufactura (\emph{Lima, Lambayeque, San Martín}). Grupo base.\par\vspace{.04cm}
+\textbf{2. Servicios/Manufactura ($n=\ServicesCount$):} 12.2\% minería, 10.6\% manuf. (\emph{Ica, La Libertad, Piura, Puno, Cajamarca y 6 más}).\par\vspace{.04cm}
+\textbf{3. Minero/Diversificado ($n=\MiningCount$):} 37.4\% minería, \textbf{12.2\% manuf.} (\emph{Arequipa, Áncash, Cusco, Junín, Moquegua, Tacna, Madre de Dios}).\par\vspace{.04cm}
+\textbf{4. Minero/Enclave ($n=\EnclaveCount$):} 41.9\% minería, \textbf{1.8\% manuf.} (\emph{Apurímac, Huancavelica, Pasco}).\par\vspace{.05cm}
+\textcolor{ccdeaccent}{\bfseries Nota:} etiquetas analíticas propias; no son categorías oficiales del INEI.
+\end{keybox}
+\end{column}
 \end{columns}
-\vspace{.10cm}
-\begin{simplebox}
-\nota{Criterio de diseño} la tipología se fija en \PreStart--\PreEnd\ para no clasificar regiones con sus propios resultados post-2020, sin suponer exogeneidad estricta.
-\end{simplebox}
 \end{frame}
 
-% ---------------------------------------------------------------- 4. Horizontes
-\begin{frame}[t]{Horizontes de análisis: estructura prepandemia, crecimiento anual y nivel}
-\vspace{.10cm}
+% ---------------------------------------------------------------- 4. Horizontes y diseño de panel
+\begin{frame}[t]{Horizontes muestrales y especificación econométrica de efectos fijos}
+\vspace{.08cm}
 \begin{columns}[T,onlytextwidth]
-\begin{column}{.31\textwidth}\begin{keybox}[equal height group=g5]\large\bfseries \PreStart--\PreEnd\par\medskip\normalfont\normalsize Estructura previa\par\smallskip\small Promedio quinquenal de participaciones en el VAB, libre de variaciones de un año aislado.\end{keybox}\end{column}
-\begin{column}{.31\textwidth}\begin{keybox}[equal height group=g5]\large\bfseries \RateStart--\RateEnd\par\medskip\normalfont\normalsize Crecimiento anual\par\smallskip\small Panel balanceado de \RatesObs\ observaciones de variación anual del VAB real (modelos M1--M4).\end{keybox}\end{column}
-\begin{column}{.31\textwidth}\begin{keybox}[equal height group=g5]\large\bfseries \LevelStart--\LevelEnd\par\medskip\normalfont\normalsize Nivel (2019 = 100)\par\smallskip\small Panel balanceado de \LevelsObs\ observaciones del índice de volumen físico (modelos M5--M6).\end{keybox}\end{column}
+\begin{column}{.31\textwidth}\begin{keybox}[equal height group=g5]\large\bfseries \PreStart--\PreEnd\par\medskip\normalfont\normalsize Estructura previa\par\smallskip\footnotesize Promedio quinquenal de participaciones en el VAB (\Departments\ regiones), previo al choque de \ShockYear.\end{keybox}\end{column}
+\begin{column}{.31\textwidth}\begin{keybox}[equal height group=g5]\large\bfseries \RateStart--\RateEnd\par\medskip\normalfont\normalsize Crecimiento ($g_{it}$)\par\smallskip\footnotesize Panel balanceado de \RatesObs\ obs. de variación anual del VAB real (modelos M1--M4).\end{keybox}\end{column}
+\begin{column}{.31\textwidth}\begin{keybox}[equal height group=g5]\large\bfseries \LevelStart--\LevelEnd\par\medskip\normalfont\normalsize Nivel ($I_{it}$, $2019=100$)\par\smallskip\footnotesize Panel balanceado de \LevelsObs\ obs. del índice de volumen físico (modelos M5--M6).\end{keybox}\end{column}
 \end{columns}
-\vspace{.18cm}
+\vspace{.12cm}
 \begin{simplebox}
-\nota{Cobertura muestral} la base consolida \BaseObs\ registros (\BaseStart--\BaseEnd); el corte en \RateEnd\ preserva paneles estrictamente balanceados en los \Departments\ departamentos.
+\nota{Modelo de panel con efectos fijos (\texttt{PanelOLS})} $y_{it}=\alpha_i+\beta_C C_t+\beta_P P_t+\sum_{k\neq r}(\gamma_k C_t+\theta_k P_t)G_{ik}+u_{it}$, con $\alpha_i$ departamental, referencia $r=\text{Diversificado/Agro}$ y errores estándar agrupados por región (excluye 2024--2025 por cobertura incompleta).
 \end{simplebox}
-\source{INEI, Cuentas Nacionales por Departamentos. Elaboración propia.}
+\source{INEI, Cuentas Nacionales por Departamentos (\BaseObs\ registros en \BaseStart--\BaseEnd). Elaboración propia.}
 \end{frame}
 
 % ---------------------------------------------------------------- 5. PCA
